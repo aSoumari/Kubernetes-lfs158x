@@ -1,0 +1,1757 @@
+med@med-pad-100:~$ mkdir rbac
+med@med-pad-100:~$ cd rbac
+med@med-pad-100:~/rbac$ sudo useradd -s /bin/bash/ bob
+[sudo] Mot de passe de med : 
+Désolé, essayez de nouveau.
+[sudo] Mot de passe de med : 
+Désolé, essayez de nouveau.
+[sudo] Mot de passe de med : 
+sudo: 3 saisies de mots de passe incorrectes
+med@med-pad-100:~/rbac$ sudo useradd -s /bin/bash/ bob
+[sudo] Mot de passe de med : 
+med@med-pad-100:~/rbac$ sudo passwd bob
+Entrez le nouveau mot de passe UNIX : 
+Retapez le nouveau mot de passe UNIX : 
+passwd : le mot de passe a été mis à jour avec succès
+med@med-pad-100:~/rbac$ openssl
+OpenSSL> help
+Standard commands
+asn1parse         ca                ciphers           cms               
+crl               crl2pkcs7         dgst              dhparam           
+dsa               dsaparam          ec                ecparam           
+enc               engine            errstr            gendsa            
+genpkey           genrsa            help              list              
+nseq              ocsp              passwd            pkcs12            
+pkcs7             pkcs8             pkey              pkeyparam         
+pkeyutl           prime             rand              rehash            
+req               rsa               rsautl            s_client          
+s_server          s_time            sess_id           smime             
+speed             spkac             srp               storeutl          
+ts                verify            version           x509              
+
+Message Digest commands (see the `dgst' command for more details)
+blake2b512        blake2s256        gost              md4               
+md5               rmd160            sha1              sha224            
+sha256            sha3-224          sha3-256          sha3-384          
+sha3-512          sha384            sha512            sha512-224        
+sha512-256        shake128          shake256          sm3               
+
+Cipher commands (see the `enc' command for more details)
+aes-128-cbc       aes-128-ecb       aes-192-cbc       aes-192-ecb       
+aes-256-cbc       aes-256-ecb       aria-128-cbc      aria-128-cfb      
+aria-128-cfb1     aria-128-cfb8     aria-128-ctr      aria-128-ecb      
+aria-128-ofb      aria-192-cbc      aria-192-cfb      aria-192-cfb1     
+aria-192-cfb8     aria-192-ctr      aria-192-ecb      aria-192-ofb      
+aria-256-cbc      aria-256-cfb      aria-256-cfb1     aria-256-cfb8     
+aria-256-ctr      aria-256-ecb      aria-256-ofb      base64            
+bf                bf-cbc            bf-cfb            bf-ecb            
+bf-ofb            camellia-128-cbc  camellia-128-ecb  camellia-192-cbc  
+camellia-192-ecb  camellia-256-cbc  camellia-256-ecb  cast              
+cast-cbc          cast5-cbc         cast5-cfb         cast5-ecb         
+cast5-ofb         des               des-cbc           des-cfb           
+des-ecb           des-ede           des-ede-cbc       des-ede-cfb       
+des-ede-ofb       des-ede3          des-ede3-cbc      des-ede3-cfb      
+des-ede3-ofb      des-ofb           des3              desx              
+rc2               rc2-40-cbc        rc2-64-cbc        rc2-cbc           
+rc2-cfb           rc2-ecb           rc2-ofb           rc4               
+rc4-40            seed              seed-cbc          seed-cfb          
+seed-ecb          seed-ofb          sm4-cbc           sm4-cfb           
+sm4-ctr           sm4-ecb           sm4-ofb           
+
+OpenSSL> quit
+med@med-pad-100:~/rbac$ openssl req -new -key bob.key -out bob.csr -subj "/CN=bob/O=learner"
+Can't open bob.key for reading, No such file or directory
+140219602674112:error:02001002:system library:fopen:No such file or directory:../crypto/bio/bss_file.c:72:fopen('bob.key','r')
+140219602674112:error:2006D080:BIO routines:BIO_new_file:no such file:../crypto/bio/bss_file.c:79:
+unable to load Private Key
+med@med-pad-100:~/rbac$ openssl genrsa -out bob.key 2048
+Generating RSA private key, 2048 bit long modulus (2 primes)
+................................+++++
+...................+++++
+e is 65537 (0x010001)
+med@med-pad-100:~/rbac$ openssl req -new -key bob.key -out bob.csr -subj "/CN=bob/O=learner"
+Can't load /home/med/.rnd into RNG
+140008098013632:error:2406F079:random number generator:RAND_load_file:Cannot open file:../crypto/rand/randfile.c:88:Filename=/home/med/.rnd
+med@med-pad-100:~/rbac$ sudo openssl req -new -key bob.key -out bob.csr -subj "/CN=bob/O=learner"
+[sudo] Mot de passe de med : 
+Can't load /home/med/.rnd into RNG
+140179778523584:error:2406F079:random number generator:RAND_load_file:Cannot open file:../crypto/rand/randfile.c:88:Filename=/home/med/.rnd
+med@med-pad-100:~/rbac$ cd /etc/ssl/openssl.cnf
+bash: cd: /etc/ssl/openssl.cnf: N'est pas un dossier
+med@med-pad-100:~/rbac$ cd /etc/ssl
+med@med-pad-100:/etc/ssl$ nano openssl.cnf
+med@med-pad-100:/etc/ssl$ sudo nano openssl.cnf
+med@med-pad-100:/etc/ssl$ sudo openssl req -new -key bob.key -out bob.csr -subj "/CN=bob/O=learner"
+Can't open bob.key for reading, No such file or directory
+140506290463168:error:02001002:system library:fopen:No such file or directory:../crypto/bio/bss_file.c:72:fopen('bob.key','r')
+140506290463168:error:2006D080:BIO routines:BIO_new_file:no such file:../crypto/bio/bss_file.c:79:
+unable to load Private Key
+med@med-pad-100:/etc/ssl$ openssl genrsa -out bob.key 2048
+genrsa: Can't open "bob.key" for writing, Permission denied
+med@med-pad-100:/etc/ssl$ openssl req -new -key bob.key -out bob.csr -subj "/CN=bob/O=learner"
+Can't open bob.key for reading, No such file or directory
+139653987144128:error:02001002:system library:fopen:No such file or directory:../crypto/bio/bss_file.c:72:fopen('bob.key','r')
+139653987144128:error:2006D080:BIO routines:BIO_new_file:no such file:../crypto/bio/bss_file.c:79:
+unable to load Private Key
+med@med-pad-100:/etc/ssl$ cd--
+cd-- : commande introuvable
+med@med-pad-100:/etc/ssl$ cd --
+med@med-pad-100:~$ openssl req -new -key bob.key -out bob.csr -subj "/CN=bob/O=learner"
+Can't open bob.key for reading, No such file or directory
+140046256726464:error:02001002:system library:fopen:No such file or directory:../crypto/bio/bss_file.c:72:fopen('bob.key','r')
+140046256726464:error:2006D080:BIO routines:BIO_new_file:no such file:../crypto/bio/bss_file.c:79:
+unable to load Private Key
+med@med-pad-100:~$ cd rbac
+med@med-pad-100:~/rbac$ openssl req -new -key bob.key -out bob.csr -subj "/CN=bob/O=learner"
+med@med-pad-100:~/rbac$ cat bob.csr
+-----BEGIN CERTIFICATE REQUEST-----
+MIICZTCCAU0CAQAwIDEMMAoGA1UEAwwDYm9iMRAwDgYDVQQKDAdsZWFybmVyMIIB
+IjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAxoLquv+bs7IhZmUo4PL/glit
+hw9fguTpcCCmh6gXdXM9sKZerD5osL6brpmrqeo0IdcyAVgUTB9GQIqjvzDuDcMR
+fjw6HmbIlu7tMthykZdWVyR7ipwvlMuUfQ/y+81vJsJbC2LY8iuenkmHNqfttnOF
+gLN0qeqRvW02HkbJqEwx2Cu/T5kMsXlUGnKb6UA7yHGEw44UFWPl+4PSz8Ml0r7y
+F7kQhfCBs4eJejQuo6Ce4XgOe6CcZjACnp1ATMqjwq/c2xPTX9u9jkKCsMVi27kU
+RFbQXgYq1CvfJxr60RmY0XVFGMjhdHGiEDLvI8KZyB77L7sRiXZpIudZX0TBPQID
+AQABoAAwDQYJKoZIhvcNAQELBQADggEBADdrowhOFDqZwYg5zIJ+uFSF0GxERp9y
+LVOKfc8hz2aKHLnYqV5k15unldvVeio1dIxuJMfkzsWtrPDzS9Z7yR6t7KxaDHcE
+vs+DNTvfdPnJPVYmEgKQHVSg7TDZDGPDp1O4FL7UF4ldIdIjknZ5ocuePrrm8Qzu
+grSZrHeCGV0DWAtlya67BI8uo+P8O6P5AQxJteD3+F54YS6pWkkcb27oqBW3hPdi
+Tg3H0VIKRe+r2WyxPekGhmibPivdE5U0bcD5fFgSUkPp0lpccbWDthWExf0fzUXZ
+mU+2GNfWymGexIWEt2AHnNVH/YtkK2RD3V9Xufs6WAGGiH5PSiV1Puk=
+-----END CERTIFICATE REQUEST-----
+med@med-pad-100:~/rbac$ cat bob.csr | base64 | tr -d '\n' , '%'
+tr: opérande supplémentaire «,»
+Saisissez « tr --help » pour plus d'informations.
+med@med-pad-100:~/rbac$ cat bob.csr | base64 | tr -d '\n','%'
+LS0tLS1CRUdJTiBDRVJUSUZJQ0FURSBSRVFVRVNULS0tLS0KTUlJQ1pUQ0NBVTBDQVFBd0lERU1NQW9HQTFVRUF3d0RZbTlpTVJBd0RnWURWUVFLREFkc1pXRnlibVZ5TUlJQgpJakFOQmdrcWhraUc5dzBCQVFFRkFBT0NBUThBTUlJQkNnS0NBUUVBeG9McXV2K2JzN0loWm1VbzRQTC9nbGl0Cmh3OWZndVRwY0NDbWg2Z1hkWE05c0taZXJENW9zTDZicnBtcnFlbzBJZGN5QVZnVVRCOUdRSXFqdnpEdURjTVIKZmp3NkhtYklsdTd0TXRoeWtaZFdWeVI3aXB3dmxNdVVmUS95KzgxdkpzSmJDMkxZOGl1ZW5rbUhOcWZ0dG5PRgpnTE4wcWVxUnZXMDJIa2JKcUV3eDJDdS9UNWtNc1hsVUduS2I2VUE3eUhHRXc0NFVGV1BsKzRQU3o4TWwwcjd5CkY3a1FoZkNCczRlSmVqUXVvNkNlNFhnT2U2Q2NaakFDbnAxQVRNcWp3cS9jMnhQVFg5dTlqa0tDc01WaTI3a1UKUkZiUVhnWXExQ3ZmSnhyNjBSbVkwWFZGR01qaGRIR2lFREx2SThLWnlCNzdMN3NSaVhacEl1ZFpYMFRCUFFJRApBUUFCb0FBd0RRWUpLb1pJaHZjTkFRRUxCUUFEZ2dFQkFEZHJvd2hPRkRxWndZZzV6SUordUZTRjBHeEVScDl5CkxWT0tmYzhoejJhS0hMbllxVjVrMTV1bmxkdlZlaW8xZEl4dUpNZmt6c1d0clBEelM5Wjd5UjZ0N0t4YURIY0UKdnMrRE5UdmZkUG5KUFZZbUVnS1FIVlNnN1REWkRHUERwMU80Rkw3VUY0bGRJZElqa25aNW9jdWVQcnJtOFF6dQpnclNackhlQ0dWMERXQXRseWE2N0JJOHVvK1A4TzZQNUFReEp0ZUQzK0Y1NFlTNnBXa2tjYjI3b3FCVzNoUGRpClRnM0gwVklLUmUrcjJXeXhQZWtHaG1pYlBpdmRFNVUwYmNENWZGZ1NVa1BwMGxwY2NiV0R0aFdFeGYwZnpVWFoKbVUrMkdOZld5bUdleElXRXQyQUhuTlZIL1l0a0syUkQzVjlYdWZzNldBR0dpSDVQU2lWMVB1az0KLS0tLS1FTkQgQ0VSVElGSUNBVEUgUkVRVUVTVC0tLS0tCg==med@med-pad-100:~/rbac$ 
+med@med-pad-100:~/rbac$ minikube start -p minicluster
+😄  [minicluster] minikube v1.31.2 sur Ubuntu 18.04
+✨  Utilisation du pilote docker basé sur le profil existant
+👍  Démarrage du noeud de plan de contrôle minicluster dans le cluster minicluster
+🚜  Extraction de l'image de base...
+🔄  Redémarrage du docker container existant pour "minicluster" ...
+🎉  minikube 1.32.0 est disponible ! Téléchargez-le ici : https://github.com/kubernetes/minikube/releases/tag/v1.32.0
+💡  Pour désactiver cette notification, exécutez : 'minikube config set WantUpdateNotification false'
+
+🐳  Préparation de Kubernetes v1.27.4 sur Docker 24.0.4...
+🔗  Configuration de CNI (Container Networking Interface)...
+🌟  Modules activés: 
+🔎  Vérification des composants Kubernetes...
+👍  Démarrage du nœud de travail minicluster-m02 dans le cluster minicluster
+🚜  Extraction de l'image de base...
+🔄  Redémarrage du docker container existant pour "minicluster-m02" ...
+🌐  Options de réseau trouvées :
+    ▪ NO_PROXY=192.168.49.2
+
+❌  Fermeture en raison de RUNTIME_ENABLE : Failed to enable container runtime: sudo systemctl restart cri-docker.socket: Process exited with status 1
+stdout:
+
+stderr:
+Job failed. See "journalctl -xe" for details.
+
+
+╭──────────────────────────────────────────────────────────────────────────────────────────────────╮
+│                                                                                                  │
+│    😿  Si les conseils ci-dessus ne vous aident pas, veuillez nous en informer :                 │
+│    👉  https://github.com/kubernetes/minikube/issues/new/choose                                  │
+│                                                                                                  │
+│    Veuillez exécuter `minikube logs --file=logs.txt` et attachez logs.txt au problème GitHub.    │
+│                                                                                                  │
+╰──────────────────────────────────────────────────────────────────────────────────────────────────╯
+
+med@med-pad-100:~/rbac$ minikube start -p minicluster
+😄  [minicluster] minikube v1.31.2 sur Ubuntu 18.04
+✨  Utilisation du pilote docker basé sur le profil existant
+👍  Démarrage du noeud de plan de contrôle minicluster dans le cluster minicluster
+🚜  Extraction de l'image de base...
+🏃  Mise à jour du container docker en marche "minicluster" ...
+🐳  Préparation de Kubernetes v1.27.4 sur Docker 24.0.4...
+🌟  Modules activés: 
+🔎  Vérification des composants Kubernetes...
+👍  Démarrage du nœud de travail minicluster-m02 dans le cluster minicluster
+🚜  Extraction de l'image de base...
+🏃  Mise à jour du container docker en marche "minicluster-m02" ...
+🌐  Options de réseau trouvées :
+    ▪ NO_PROXY=192.168.49.2
+🐳  Préparation de Kubernetes v1.27.4 sur Docker 24.0.4...
+    ▪ env NO_PROXY=192.168.49.2
+🔎  Vérification des composants Kubernetes...
+🏄  Terminé ! kubectl est maintenant configuré pour utiliser "minicluster" cluster et espace de noms "default" par défaut.
+med@med-pad-100:~/rbac$ minikube profil liste
+Error: unknown command "profil" for "minikube"
+
+Did you mean this?
+	profile
+
+Run 'minikube --help' for usage.
+med@med-pad-100:~/rbac$ minikube profile list
+|-------------|-----------|---------|--------------|------|---------|---------|-------|--------|
+|   Profile   | VM Driver | Runtime |      IP      | Port | Version | Status  | Nodes | Active |
+|-------------|-----------|---------|--------------|------|---------|---------|-------|--------|
+| minicluster | docker    | docker  | 192.168.49.2 | 8443 | v1.27.4 | Running |     2 | *      |
+|-------------|-----------|---------|--------------|------|---------|---------|-------|--------|
+med@med-pad-100:~/rbac$ kubectl config view
+apiVersion: v1
+clusters:
+- cluster:
+    certificate-authority: /home/med/.minikube/ca.crt
+    extensions:
+    - extension:
+        last-update: Wed, 06 Dec 2023 20:07:03 +01
+        provider: minikube.sigs.k8s.io
+        version: v1.31.2
+      name: cluster_info
+    server: https://192.168.49.2:8443
+  name: minicluster
+contexts:
+- context:
+    cluster: minicluster
+    extensions:
+    - extension:
+        last-update: Wed, 06 Dec 2023 20:07:03 +01
+        provider: minikube.sigs.k8s.io
+        version: v1.31.2
+      name: context_info
+    namespace: default
+    user: minicluster
+  name: minicluster
+current-context: minicluster
+kind: Config
+preferences: {}
+users:
+- name: minicluster
+  user:
+    client-certificate: /home/med/.minikube/profiles/minicluster/client.crt
+    client-key: /home/med/.minikube/profiles/minicluster/client.key
+med@med-pad-100:~/rbac$ kubectl create namespace lfs158
+namespace/lfs158 created
+med@med-pad-100:~/rbac$ nano signing-request.yaml
+med@med-pad-100:~/rbac$ cat bob.csr | base64 | tr -d '\n','%'
+LS0tLS1CRUdJTiBDRVJUSUZJQ0FURSBSRVFVRVNULS0tLS0KTUlJQ1pUQ0NBVTBDQVFBd0lERU1NQW9HQTFVRUF3d0RZbTlpTVJBd0RnWURWUVFLREFkc1pXRnlibVZ5TUlJQgpJakFOQmdrcWhraUc5dzBCQVFFRkFBT0NBUThBTUlJQkNnS0NBUUVBeG9McXV2K2JzN0loWm1VbzRQTC9nbGl0Cmh3OWZndVRwY0NDbWg2Z1hkWE05c0taZXJENW9zTDZicnBtcnFlbzBJZGN5QVZnVVRCOUdRSXFqdnpEdURjTVIKZmp3NkhtYklsdTd0TXRoeWtaZFdWeVI3aXB3dmxNdVVmUS95KzgxdkpzSmJDMkxZOGl1ZW5rbUhOcWZ0dG5PRgpnTE4wcWVxUnZXMDJIa2JKcUV3eDJDdS9UNWtNc1hsVUduS2I2VUE3eUhHRXc0NFVGV1BsKzRQU3o4TWwwcjd5CkY3a1FoZkNCczRlSmVqUXVvNkNlNFhnT2U2Q2NaakFDbnAxQVRNcWp3cS9jMnhQVFg5dTlqa0tDc01WaTI3a1UKUkZiUVhnWXExQ3ZmSnhyNjBSbVkwWFZGR01qaGRIR2lFREx2SThLWnlCNzdMN3NSaVhacEl1ZFpYMFRCUFFJRApBUUFCb0FBd0RRWUpLb1pJaHZjTkFRRUxCUUFEZ2dFQkFEZHJvd2hPRkRxWndZZzV6SUordUZTRjBHeEVScDl5CkxWT0tmYzhoejJhS0hMbllxVjVrMTV1bmxkdlZlaW8xZEl4dUpNZmt6c1d0clBEelM5Wjd5UjZ0N0t4YURIY0UKdnMrRE5UdmZkUG5KUFZZbUVnS1FIVlNnN1REWkRHUERwMU80Rkw3VUY0bGRJZElqa25aNW9jdWVQcnJtOFF6dQpnclNackhlQ0dWMERXQXRseWE2N0JJOHVvK1A4TzZQNUFReEp0ZUQzK0Y1NFlTNnBXa2tjYjI3b3FCVzNoUGRpClRnM0gwVklLUmUrcjJXeXhQZWtHaG1pYlBpdmRFNVUwYmNENWZGZ1NVa1BwMGxwY2NiV0R0aFdFeGYwZnpVWFoKbVUrMkdOZld5bUdleElXRXQyQUhuTlZIL1l0a0syUkQzVjlYdWZzNldBR0dpSDVQU2lWMVB1az0KLS0tLS1FTkQgQ0VSVElGSUNBVEUgUkVRVUVTVC0tLS0tCg==med@med-pad-nano signing-request.yaml
+med@med-pad-100:~/rbac$ kubectl create -f signing-request.yaml 
+error: error parsing signing-request.yaml: error converting YAML to JSON: yaml: line 9: could not find expected ':'
+med@med-pad-100:~/rbac$ nano signing-request.yaml
+med@med-pad-100:~/rbac$ kubectl create -f signing-request.yaml 
+certificatesigningrequest.certificates.k8s.io/bob-csr created
+med@med-pad-100:~/rbac$ kubectl get csr
+NAME      AGE   SIGNERNAME                            REQUESTOR       REQUESTEDDURATION   CONDITION
+bob-csr   30s   kubernetes.io/kube-apiserver-client   minikube-user   <none>              Pending
+med@med-pad-100:~/rbac$ kubectl get pods -o wide
+No resources found in default namespace.
+med@med-pad-100:~/rbac$ kubectl get pods -o wide n-
+Error from server (NotFound): pods "n-" not found
+med@med-pad-100:~/rbac$ kubectl get pods -o wide -n
+error: flag needs an argument: 'n' in -n
+See 'kubectl get --help' for usage.
+med@med-pad-100:~/rbac$ kubectl get pods -o wide -n system
+No resources found in system namespace.
+med@med-pad-100:~/rbac$ kubectl get pods -o wide 
+No resources found in default namespace.
+med@med-pad-100:~/rbac$ kubectl get csr
+NAME      AGE   SIGNERNAME                            REQUESTOR       REQUESTEDDURATION   CONDITION
+bob-csr   14m   kubernetes.io/kube-apiserver-client   minikube-user   <none>              Pending
+med@med-pad-100:~/rbac$ nano signing-request.yaml
+med@med-pad-100:~/rbac$ kubectl certificate approve bob-csr
+certificatesigningrequest.certificates.k8s.io/bob-csr approved
+med@med-pad-100:~/rbac$ kubectl get csr
+NAME      AGE   SIGNERNAME                            REQUESTOR       REQUESTEDDURATION   CONDITION
+bob-csr   16m   kubernetes.io/kube-apiserver-client   minikube-user   <none>              Approved,Issued
+med@med-pad-100:~/rbac$ kubectl get csr bob-csr 
+NAME      AGE   SIGNERNAME                            REQUESTOR       REQUESTEDDURATION   CONDITION
+bob-csr   42m   kubernetes.io/kube-apiserver-client   minikube-user   <none>              Approved,Issued
+med@med-pad-100:~/rbac$ kubectl get csr bob-csr -o jsonpath='{.status.certificate'}
+LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tCk1JSURGakNDQWY2Z0F3SUJBZ0lSQUlIWjBSNHZqZStNL0dVYVN6aHl3RDR3RFFZSktvWklodmNOQVFFTEJRQXcKRlRFVE1CRUdBMVVFQXhNS2JXbHVhV3QxWW1WRFFUQWVGdzB5TXpFeU1EWXlNVE15TXpKYUZ3MHlOREV5TURVeQpNVE15TXpKYU1DQXhFREFPQmdOVkJBb1RCMnhsWVhKdVpYSXhEREFLQmdOVkJBTVRBMkp2WWpDQ0FTSXdEUVlKCktvWklodmNOQVFFQkJRQURnZ0VQQURDQ0FRb0NnZ0VCQU1hQzZyci9tN095SVdabEtPRHkvNEpZclljUFg0TGsKNlhBZ3BvZW9GM1Z6UGJDbVhxdythTEMrbTY2WnE2bnFOQ0hYTWdGWUZFd2ZSa0NLbzc4dzdnM0RFWDQ4T2g1bQp5SmJ1N1RMWWNwR1hWbGNrZTRxY0w1VExsSDBQOHZ2TmJ5YkNXd3RpMlBJcm5wNUpoemFuN2JaemhZQ3pkS25xCmtiMXROaDVHeWFoTU1kZ3J2MCtaRExGNVZCcHltK2xBTzhoeGhNT09GQlZqNWZ1RDBzL0RKZEsrOGhlNUVJWHcKZ2JPSGlYbzBMcU9nbnVGNERudWduR1l3QXA2ZFFFektvOEt2M05zVDAxL2J2WTVDZ3JERll0dTVGRVJXMEY0RwpLdFFyM3ljYSt0RVptTkYxUlJqSTRYUnhvaEF5N3lQQ21jZ2UreSs3RVlsMmFTTG5XVjlFd1QwQ0F3RUFBYU5XCk1GUXdEZ1lEVlIwUEFRSC9CQVFEQWdXZ01CTUdBMVVkSlFRTU1Bb0dDQ3NHQVFVRkJ3TUNNQXdHQTFVZEV3RUIKL3dRQ01BQXdId1lEVlIwakJCZ3dGb0FVZEU5M0p5NFdkbGkxQXhDQXg0MGtScWIxRzdNd0RRWUpLb1pJaHZjTgpBUUVMQlFBRGdnRUJBTmJkV3lmaGtFMlhyUUZDdW80czlPV3RvQUNhdkxvVkpUVFdhUVdmWkx2VGY4d1ZLWW10CkFyRk9PdGhaUGRYYklsK1ZSSXJMc1ZCWHZBZ1RTMDZaeUFtTXFrbTVKRXh6ancvMkhzblNXeUdLUE1WeEhGWU4KeVZiZXo4OWcxYXNUaUlIQ0Z5aTBqUWUwajdKMXlRR0c5T3FLSFBuZlg1b0FnL0d0c1VFcUVZeUV1ZWJiakRUVwppL0hkYy8wNDFxTVp6NFo0WElTUnlJSjVTcVhQZWt3UnpLSEY4STBBdjZHam9xbU1YWTR1RFkrUDFiMUNFeWxYCkY0aDc3Yi9vdFdIYlZhUlhhSjJzK0lTZ2NxaVdpM2dHNzQzekIzQ0RId1JXbFBzN3N2MTVaZG1WeXViYXVySVYKTk9nSEJRQzhpLytEY3hYZmNUOU42UzBOWXRXZk91a3hwWlk9Ci0tLS0tRU5EIENFUlRJRklDQVRFLS0tLS0Kmed@med-pad-100:~/rbac$ kubectl get csr bob-csr -o jsonpdth='{.status.certificate'} base64 - 
+error: unknown shorthand flag: 'd' in -d
+See 'kubectl get --help' for usage.
+med@med-pad-100:~/rbac$ kubectl get csr bob-csr -o jsonpath='{.status.certificate'} base64 -d
+error: unknown shorthand flag: 'd' in -d
+See 'kubectl get --help' for usage.
+med@med-pad-100:~/rbac$ kubectl get csr bob-csr -o jsonpath='{.status.certificate'} base64 
+Error from server (NotFound): certificatesigningrequests.certificates.k8s.io "base64" not found
+med@med-pad-100:~/rbac$ kubectl get csr bob-csr -o jsonpath='{.status.certificate'} | base64-d 
+base64-d : commande introuvable
+med@med-pad-100:~/rbac$ kubectl get csr bob-csr -o jsonpath='{.status.certificate'} | base64 -d 
+-----BEGIN CERTIFICATE-----
+MIIDFjCCAf6gAwIBAgIRAIHZ0R4vje+M/GUaSzhywD4wDQYJKoZIhvcNAQELBQAw
+FTETMBEGA1UEAxMKbWluaWt1YmVDQTAeFw0yMzEyMDYyMTMyMzJaFw0yNDEyMDUy
+MTMyMzJaMCAxEDAOBgNVBAoTB2xlYXJuZXIxDDAKBgNVBAMTA2JvYjCCASIwDQYJ
+KoZIhvcNAQEBBQADggEPADCCAQoCggEBAMaC6rr/m7OyIWZlKODy/4JYrYcPX4Lk
+6XAgpoeoF3VzPbCmXqw+aLC+m66Zq6nqNCHXMgFYFEwfRkCKo78w7g3DEX48Oh5m
+yJbu7TLYcpGXVlcke4qcL5TLlH0P8vvNbybCWwti2PIrnp5Jhzan7bZzhYCzdKnq
+kb1tNh5GyahMMdgrv0+ZDLF5VBpym+lAO8hxhMOOFBVj5fuD0s/DJdK+8he5EIXw
+gbOHiXo0LqOgnuF4DnugnGYwAp6dQEzKo8Kv3NsT01/bvY5CgrDFYtu5FERW0F4G
+KtQr3yca+tEZmNF1RRjI4XRxohAy7yPCmcge+y+7EYl2aSLnWV9EwT0CAwEAAaNW
+MFQwDgYDVR0PAQH/BAQDAgWgMBMGA1UdJQQMMAoGCCsGAQUFBwMCMAwGA1UdEwEB
+/wQCMAAwHwYDVR0jBBgwFoAUdE93Jy4Wdli1AxCAx40kRqb1G7MwDQYJKoZIhvcN
+AQELBQADggEBANbdWyfhkE2XrQFCuo4s9OWtoACavLoVJTTWaQWfZLvTf8wVKYmt
+ArFOOthZPdXbIl+VRIrLsVBXvAgTS06ZyAmMqkm5JExzjw/2HsnSWyGKPMVxHFYN
+yVbez89g1asTiIHCFyi0jQe0j7J1yQGG9OqKHPnfX5oAg/GtsUEqEYyEuebbjDTW
+i/Hdc/041qMZz4Z4XISRyIJ5SqXPekwRzKHF8I0Av6GjoqmMXY4uDY+P1b1CEylX
+F4h77b/otWHbVaRXaJ2s+ISgcqiWi3gG743zB3CDHwRWlPs7sv15ZdmVyubaurIV
+NOgHBQC8i/+DcxXfcT9N6S0NYtWfOukxpZY=
+-----END CERTIFICATE-----
+med@med-pad-100:~/rbac$ kubectl get csr bob-csr -o jsonpath='{.status.certificate'} | base64 -d > bob.crt
+med@med-pad-100:~/rbac$ cat bob.crt
+-----BEGIN CERTIFICATE-----
+MIIDFjCCAf6gAwIBAgIRAIHZ0R4vje+M/GUaSzhywD4wDQYJKoZIhvcNAQELBQAw
+FTETMBEGA1UEAxMKbWluaWt1YmVDQTAeFw0yMzEyMDYyMTMyMzJaFw0yNDEyMDUy
+MTMyMzJaMCAxEDAOBgNVBAoTB2xlYXJuZXIxDDAKBgNVBAMTA2JvYjCCASIwDQYJ
+KoZIhvcNAQEBBQADggEPADCCAQoCggEBAMaC6rr/m7OyIWZlKODy/4JYrYcPX4Lk
+6XAgpoeoF3VzPbCmXqw+aLC+m66Zq6nqNCHXMgFYFEwfRkCKo78w7g3DEX48Oh5m
+yJbu7TLYcpGXVlcke4qcL5TLlH0P8vvNbybCWwti2PIrnp5Jhzan7bZzhYCzdKnq
+kb1tNh5GyahMMdgrv0+ZDLF5VBpym+lAO8hxhMOOFBVj5fuD0s/DJdK+8he5EIXw
+gbOHiXo0LqOgnuF4DnugnGYwAp6dQEzKo8Kv3NsT01/bvY5CgrDFYtu5FERW0F4G
+KtQr3yca+tEZmNF1RRjI4XRxohAy7yPCmcge+y+7EYl2aSLnWV9EwT0CAwEAAaNW
+MFQwDgYDVR0PAQH/BAQDAgWgMBMGA1UdJQQMMAoGCCsGAQUFBwMCMAwGA1UdEwEB
+/wQCMAAwHwYDVR0jBBgwFoAUdE93Jy4Wdli1AxCAx40kRqb1G7MwDQYJKoZIhvcN
+AQELBQADggEBANbdWyfhkE2XrQFCuo4s9OWtoACavLoVJTTWaQWfZLvTf8wVKYmt
+ArFOOthZPdXbIl+VRIrLsVBXvAgTS06ZyAmMqkm5JExzjw/2HsnSWyGKPMVxHFYN
+yVbez89g1asTiIHCFyi0jQe0j7J1yQGG9OqKHPnfX5oAg/GtsUEqEYyEuebbjDTW
+i/Hdc/041qMZz4Z4XISRyIJ5SqXPekwRzKHF8I0Av6GjoqmMXY4uDY+P1b1CEylX
+F4h77b/otWHbVaRXaJ2s+ISgcqiWi3gG743zB3CDHwRWlPs7sv15ZdmVyubaurIV
+NOgHBQC8i/+DcxXfcT9N6S0NYtWfOukxpZY=
+-----END CERTIFICATE-----
+med@med-pad-100:~/rbac$ kubectl config set-credentials bob --client-certificate=bob.crt --client-key=bob.key000000 8547/
+Set a user entry in kubeconfig.
+
+ Specifying a name that already exists will merge new fields on top of existing
+values.
+
+        Client-certificate flags:
+        --client-certificate=certfile --client-key=keyfile
+        
+        Bearer token flags:
+        --token=bearer_token
+        
+        Basic auth flags:
+        --username=basic_user --password=basic_password
+        
+ Bearer token and basic auth are mutually exclusive.
+
+Examples:
+  # Set only the "client-key" field on the "cluster-admin"
+  # entry, without touching other values
+  kubectl config set-credentials cluster-admin --client-key=~/.kube/admin.key
+  
+  # Set basic auth for the "cluster-admin" entry
+  kubectl config set-credentials cluster-admin --username=admin
+--password=uXFGweU9l35qcif
+  
+  # Embed client certificate data in the "cluster-admin" entry
+  kubectl config set-credentials cluster-admin
+--client-certificate=~/.kube/admin.crt --embed-certs=true
+  
+  # Enable the Google Compute Platform auth provider for the "cluster-admin"
+entry
+  kubectl config set-credentials cluster-admin --auth-provider=gcp
+  
+  # Enable the OpenID Connect auth provider for the "cluster-admin" entry with
+additional arguments
+  kubectl config set-credentials cluster-admin --auth-provider=oidc
+--auth-provider-arg=client-id=foo --auth-provider-arg=client-secret=bar
+  
+  # Remove the "client-secret" config value for the OpenID Connect auth provider
+for the "cluster-admin" entry
+  kubectl config set-credentials cluster-admin --auth-provider=oidc
+--auth-provider-arg=client-secret-
+  
+  # Enable new exec auth plugin for the "cluster-admin" entry
+  kubectl config set-credentials cluster-admin
+--exec-command=/path/to/the/executable
+--exec-api-version=client.authentication.k8s.io/v1beta1
+  
+  # Define new exec auth plugin arguments for the "cluster-admin" entry
+  kubectl config set-credentials cluster-admin --exec-arg=arg1 --exec-arg=arg2
+  
+  # Create or update exec auth plugin environment variables for the
+"cluster-admin" entry
+  kubectl config set-credentials cluster-admin --exec-env=key1=val1
+--exec-env=key2=val2
+  
+  # Remove exec auth plugin environment variables for the "cluster-admin" entry
+  kubectl config set-credentials cluster-admin --exec-env=var-to-remove-
+
+Options:
+    --auth-provider='':
+	Auth provider for the user entry in kubeconfig
+
+    --auth-provider-arg=[]:
+	'key=value' arguments for the auth provider
+
+    --client-certificate='':
+	Path to client-certificate file for the user entry in kubeconfig
+
+    --client-key='':
+	Path to client-key file for the user entry in kubeconfig
+
+    --embed-certs=false:
+	Embed client cert/key for the user entry in kubeconfig
+
+    --exec-api-version='':
+	API version of the exec credential plugin for the user entry in
+	kubeconfig
+
+    --exec-arg=[]:
+	New arguments for the exec credential plugin command for the user
+	entry in kubeconfig
+
+    --exec-command='':
+	Command for the exec credential plugin for the user entry in
+	kubeconfig
+
+    --exec-env=[]:
+	'key=value' environment values for the exec credential plugin
+
+    --password='':
+	password for the user entry in kubeconfig
+
+    --token='':
+	token for the user entry in kubeconfig
+
+    --username='':
+	username for the user entry in kubeconfig
+
+Usage:
+  kubectl config set-credentials NAME [--client-certificate=path/to/certfile]
+[--client-key=path/to/keyfile] [--token=bearer_token] [--username=basic_user]
+[--password=basic_password] [--auth-provider=provider_name]
+[--auth-provider-arg=key=value] [--exec-command=exec_command]
+[--exec-api-version=exec_api_version] [--exec-arg=arg] [--exec-env=key=value]
+[options]
+
+Use "kubectl options" for a list of global command-line options (applies to all
+commands).
+error: unexpected args: [bob 8547/]
+med@med-pad-100:~/rbac$ kubectl config view
+apiVersion: v1
+clusters:
+- cluster:
+    certificate-authority: /home/med/.minikube/ca.crt
+    extensions:
+    - extension:
+        last-update: Wed, 06 Dec 2023 20:07:03 +01
+        provider: minikube.sigs.k8s.io
+        version: v1.31.2
+      name: cluster_info
+    server: https://192.168.49.2:8443
+  name: minicluster
+contexts:
+- context:
+    cluster: minicluster
+    extensions:
+    - extension:
+        last-update: Wed, 06 Dec 2023 20:07:03 +01
+        provider: minikube.sigs.k8s.io
+        version: v1.31.2
+      name: context_info
+    namespace: default
+    user: minicluster
+  name: minicluster
+current-context: minicluster
+kind: Config
+preferences: {}
+users:
+- name: minicluster
+  user:
+    client-certificate: /home/med/.minikube/profiles/minicluster/client.crt
+    client-key: /home/med/.minikube/profiles/minicluster/client.key
+med@med-pad-100:~/rbac$ kubectl config set-credentials bob --client-certificate=bob.crt --client-key=bob.key
+User "bob" set.
+med@med-pad-100:~/rbac$ kubectl config view
+apiVersion: v1
+clusters:
+- cluster:
+    certificate-authority: /home/med/.minikube/ca.crt
+    extensions:
+    - extension:
+        last-update: Wed, 06 Dec 2023 20:07:03 +01
+        provider: minikube.sigs.k8s.io
+        version: v1.31.2
+      name: cluster_info
+    server: https://192.168.49.2:8443
+  name: minicluster
+contexts:
+- context:
+    cluster: minicluster
+    extensions:
+    - extension:
+        last-update: Wed, 06 Dec 2023 20:07:03 +01
+        provider: minikube.sigs.k8s.io
+        version: v1.31.2
+      name: context_info
+    namespace: default
+    user: minicluster
+  name: minicluster
+current-context: minicluster
+kind: Config
+preferences: {}
+users:
+- name: bob
+  user:
+    client-certificate: /home/med/rbac/bob.crt
+    client-key: /home/med/rbac/bob.key
+- name: minicluster
+  user:
+    client-certificate: /home/med/.minikube/profiles/minicluster/client.crt
+    client-key: /home/med/.minikube/profiles/minicluster/client.key
+med@med-pad-100:~/rbac$ kubectl config set-context bob-context --cluster=minicluster --namespace=lds158 --user=bob
+Context "bob-context" created.
+med@med-pad-100:~/rbac$ kubectl config view
+apiVersion: v1
+clusters:
+- cluster:
+    certificate-authority: /home/med/.minikube/ca.crt
+    extensions:
+    - extension:
+        last-update: Wed, 06 Dec 2023 20:07:03 +01
+        provider: minikube.sigs.k8s.io
+        version: v1.31.2
+      name: cluster_info
+    server: https://192.168.49.2:8443
+  name: minicluster
+contexts:
+- context:
+    cluster: minicluster
+    namespace: lds158
+    user: bob
+  name: bob-context
+- context:
+    cluster: minicluster
+    extensions:
+    - extension:
+        last-update: Wed, 06 Dec 2023 20:07:03 +01
+        provider: minikube.sigs.k8s.io
+        version: v1.31.2
+      name: context_info
+    namespace: default
+    user: minicluster
+  name: minicluster
+current-context: minicluster
+kind: Config
+preferences: {}
+users:
+- name: bob
+  user:
+    client-certificate: /home/med/rbac/bob.crt
+    client-key: /home/med/rbac/bob.key
+- name: minicluster
+  user:
+    client-certificate: /home/med/.minikube/profiles/minicluster/client.crt
+    client-key: /home/med/.minikube/profiles/minicluster/client.key
+med@med-pad-100:~/rbac$ kubectl -n lfs158 create deployment nginx --image=nginx:alpine
+deployment.apps/nginx created
+med@med-pad-100:~/rbac$ kubectl --context=bob-context get pods
+Error from server (Forbidden): pods is forbidden: User "bob" cannot list resource "pods" in API group "" in the namespace "lds158"
+med@med-pad-100:~/rbac$ kubectl get pods -n lfs158
+NAME                     READY   STATUS    RESTARTS   AGE
+nginx-5f8f49fff4-xnlzq   1/1     Running   0          96s
+med@med-pad-100:~/rbac$ nano role.yaml
+med@med-pad-100:~/rbac$ cat role.yaml
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+matadata:
+  name: pod-reader
+  namespace: lfs158
+rules:
+- apiGroups: [""]
+  resources: ["pods"]
+  verbs: ["get", "watch", "list"]
+med@med-pad-100:~/rbac$ kubectl create -f role.yaml
+Error from server (BadRequest): error when creating "role.yaml": Role in version "v1" cannot be handled as a Role: strict decoding error: unknown field "matadata"
+med@med-pad-100:~/rbac$ nano role.yaml
+med@med-pad-100:~/rbac$ kubectl create -f role.yaml
+role.rbac.authorization.k8s.io/pod-reader created
+med@med-pad-100:~/rbac$ kubectl get roles -n lfs158
+NAME         CREATED AT
+pod-reader   2023-12-06T23:14:33Z
+med@med-pad-100:~/rbac$ kubectl get roles 
+No resources found in default namespace.
+med@med-pad-100:~/rbac$ nano rolebinding.yaml
+med@med-pad-100:~/rbac$ kubectl create -f rolebinding.yaml
+rolebinding.rbac.authorization.k8s.io/pod-read-access created
+med@med-pad-100:~/rbac$ kubectl get rolebindings -n lfs158
+NAME              ROLE              AGE
+pod-read-access   Role/pod-reader   55s
+med@med-pad-100:~/rbac$ kubectl config view
+apiVersion: v1
+clusters:
+- cluster:
+    certificate-authority: /home/med/.minikube/ca.crt
+    extensions:
+    - extension:
+        last-update: Wed, 06 Dec 2023 20:07:03 +01
+        provider: minikube.sigs.k8s.io
+        version: v1.31.2
+      name: cluster_info
+    server: https://192.168.49.2:8443
+  name: minicluster
+contexts:
+- context:
+    cluster: minicluster
+    namespace: lds158
+    user: bob
+  name: bob-context
+- context:
+    cluster: minicluster
+    extensions:
+    - extension:
+        last-update: Wed, 06 Dec 2023 20:07:03 +01
+        provider: minikube.sigs.k8s.io
+        version: v1.31.2
+      name: context_info
+    namespace: default
+    user: minicluster
+  name: minicluster
+current-context: minicluster
+kind: Config
+preferences: {}
+users:
+- name: bob
+  user:
+    client-certificate: /home/med/rbac/bob.crt
+    client-key: /home/med/rbac/bob.key
+- name: minicluster
+  user:
+    client-certificate: /home/med/.minikube/profiles/minicluster/client.crt
+    client-key: /home/med/.minikube/profiles/minicluster/client.key
+med@med-pad-100:~/rbac$ kubectl --context=bob-context get pods
+Error from server (Forbidden): pods is forbidden: User "bob" cannot list resource "pods" in API group "" in the namespace "lds158"
+med@med-pad-100:~/rbac$ kubectl get pods --context=bob-context
+Error from server (Forbidden): pods is forbidden: User "bob" cannot list resource "pods" in API group "" in the namespace "lds158"
+med@med-pad-100:~/rbac$ kubectl config set-context bob-context --cluster=minicluster --namespace=lfs158 --user=bob
+Context "bob-context" modified.
+med@med-pad-100:~/rbac$ kubectl get pods --context=bob-context
+NAME                     READY   STATUS    RESTARTS   AGE
+nginx-5f8f49fff4-xnlzq   1/1     Running   0          40m
+med@med-pad-100:~/rbac$ kube-apiserver -h | grep enable-admission-plugins
+
+La commande « kube-apiserver » n'a pas été trouvée, mais peut être installée avec :
+
+sudo snap install kube-apiserver
+
+med@med-pad-100:~/rbac$ kubectl kube-apiserver -h | grep enable-admission-plugins
+error: unknown command "kube-apiserver" for "kubectl"
+med@med-pad-100:~/rbac$ kubectl get admissions
+error: the server doesn't have a resource type "admissions"
+med@med-pad-100:~/rbac$ kubectl get admission-plugins
+error: the server doesn't have a resource type "admission-plugins"
+med@med-pad-100:~/rbac$ kubectl -n kube-system describe pod kube-apiserver-minicluster | grep -i admission
+      --enable-admission-plugins=NamespaceLifecycle,LimitRanger,ServiceAccount,DefaultStorageClass,DefaultTolerationSeconds,NodeRestriction,MutatingAdmissionWebhook,ValidatingAdmissionWebhook,ResourceQuota
+med@med-pad-100:~/rbac$ kubectl -n kube-system describe pod kube-apiserver-minicluster
+Name:                 kube-apiserver-minicluster
+Namespace:            kube-system
+Priority:             2000001000
+Priority Class Name:  system-node-critical
+Node:                 minicluster/192.168.49.2
+Start Time:           Wed, 06 Dec 2023 19:42:49 +0100
+Labels:               component=kube-apiserver
+                      tier=control-plane
+Annotations:          kubeadm.kubernetes.io/kube-apiserver.advertise-address.endpoint: 192.168.49.2:8443
+                      kubernetes.io/config.hash: 569102f7a68b5322652e28f448f0260b
+                      kubernetes.io/config.mirror: 569102f7a68b5322652e28f448f0260b
+                      kubernetes.io/config.seen: 2023-11-30T20:11:10.609692887Z
+                      kubernetes.io/config.source: file
+Status:               Running
+SeccompProfile:       RuntimeDefault
+IP:                   192.168.49.2
+IPs:
+  IP:           192.168.49.2
+Controlled By:  Node/minicluster
+Containers:
+  kube-apiserver:
+    Container ID:  docker://bf3be09944f3e701d1c0178f7b457a8bd1211ac68b5615d49b258746646e42d1
+    Image:         registry.k8s.io/kube-apiserver:v1.27.4
+    Image ID:      docker-pullable://registry.k8s.io/kube-apiserver@sha256:697cd88d94f7f2ef42144cb3072b016dcb2e9251f0e7d41a7fede557e555452d
+    Port:          <none>
+    Host Port:     <none>
+    Command:
+      kube-apiserver
+      --advertise-address=192.168.49.2
+      --allow-privileged=true
+      --authorization-mode=Node,RBAC
+      --client-ca-file=/var/lib/minikube/certs/ca.crt
+      --enable-admission-plugins=NamespaceLifecycle,LimitRanger,ServiceAccount,DefaultStorageClass,DefaultTolerationSeconds,NodeRestriction,MutatingAdmissionWebhook,ValidatingAdmissionWebhook,ResourceQuota
+      --enable-bootstrap-token-auth=true
+      --etcd-cafile=/var/lib/minikube/certs/etcd/ca.crt
+      --etcd-certfile=/var/lib/minikube/certs/apiserver-etcd-client.crt
+      --etcd-keyfile=/var/lib/minikube/certs/apiserver-etcd-client.key
+      --etcd-servers=https://127.0.0.1:2379
+      --kubelet-client-certificate=/var/lib/minikube/certs/apiserver-kubelet-client.crt
+      --kubelet-client-key=/var/lib/minikube/certs/apiserver-kubelet-client.key
+      --kubelet-preferred-address-types=InternalIP,ExternalIP,Hostname
+      --proxy-client-cert-file=/var/lib/minikube/certs/front-proxy-client.crt
+      --proxy-client-key-file=/var/lib/minikube/certs/front-proxy-client.key
+      --requestheader-allowed-names=front-proxy-client
+      --requestheader-client-ca-file=/var/lib/minikube/certs/front-proxy-ca.crt
+      --requestheader-extra-headers-prefix=X-Remote-Extra-
+      --requestheader-group-headers=X-Remote-Group
+      --requestheader-username-headers=X-Remote-User
+      --secure-port=8443
+      --service-account-issuer=https://kubernetes.default.svc.cluster.local
+      --service-account-key-file=/var/lib/minikube/certs/sa.pub
+      --service-account-signing-key-file=/var/lib/minikube/certs/sa.key
+      --service-cluster-ip-range=10.96.0.0/12
+      --tls-cert-file=/var/lib/minikube/certs/apiserver.crt
+      --tls-private-key-file=/var/lib/minikube/certs/apiserver.key
+    State:          Running
+      Started:      Wed, 06 Dec 2023 20:05:23 +0100
+    Last State:     Terminated
+      Reason:       Error
+      Exit Code:    1
+      Started:      Wed, 06 Dec 2023 19:42:57 +0100
+      Finished:     Wed, 06 Dec 2023 20:04:55 +0100
+    Ready:          True
+    Restart Count:  2
+    Requests:
+      cpu:        250m
+    Liveness:     http-get https://192.168.49.2:8443/livez delay=10s timeout=15s period=10s #success=1 #failure=8
+    Readiness:    http-get https://192.168.49.2:8443/readyz delay=0s timeout=15s period=1s #success=1 #failure=3
+    Startup:      http-get https://192.168.49.2:8443/livez delay=10s timeout=15s period=10s #success=1 #failure=24
+    Environment:  <none>
+    Mounts:
+      /etc/ca-certificates from etc-ca-certificates (ro)
+      /etc/ssl/certs from ca-certs (ro)
+      /usr/local/share/ca-certificates from usr-local-share-ca-certificates (ro)
+      /usr/share/ca-certificates from usr-share-ca-certificates (ro)
+      /var/lib/minikube/certs from k8s-certs (ro)
+Conditions:
+  Type              Status
+  Initialized       True 
+  Ready             True 
+  ContainersReady   True 
+  PodScheduled      True 
+Volumes:
+  ca-certs:
+    Type:          HostPath (bare host directory volume)
+    Path:          /etc/ssl/certs
+    HostPathType:  DirectoryOrCreate
+  etc-ca-certificates:
+    Type:          HostPath (bare host directory volume)
+    Path:          /etc/ca-certificates
+    HostPathType:  DirectoryOrCreate
+  k8s-certs:
+    Type:          HostPath (bare host directory volume)
+    Path:          /var/lib/minikube/certs
+    HostPathType:  DirectoryOrCreate
+  usr-local-share-ca-certificates:
+    Type:          HostPath (bare host directory volume)
+    Path:          /usr/local/share/ca-certificates
+    HostPathType:  DirectoryOrCreate
+  usr-share-ca-certificates:
+    Type:          HostPath (bare host directory volume)
+    Path:          /usr/share/ca-certificates
+    HostPathType:  DirectoryOrCreate
+QoS Class:         Burstable
+Node-Selectors:    <none>
+Tolerations:       :NoExecute op=Exists
+Events:
+  Type     Reason     Age                   From     Message
+  ----     ------     ----                  ----     -------
+  Warning  Unhealthy  4m11s (x13 over 22h)  kubelet  Readiness probe failed: HTTP probe failed with statuscode: 500
+med@med-pad-100:~/rbac$ kubectl -n kube-system describe pod kube-apiserver-minicluster
+Name:                 kube-apiserver-minicluster
+Namespace:            kube-system
+Priority:             2000001000
+Priority Class Name:  system-node-critical
+Node:                 minicluster/192.168.49.2
+Start Time:           Wed, 06 Dec 2023 19:42:49 +0100
+Labels:               component=kube-apiserver
+                      tier=control-plane
+Annotations:          kubeadm.kubernetes.io/kube-apiserver.advertise-address.endpoint: 192.168.49.2:8443
+                      kubernetes.io/config.hash: 569102f7a68b5322652e28f448f0260b
+                      kubernetes.io/config.mirror: 569102f7a68b5322652e28f448f0260b
+                      kubernetes.io/config.seen: 2023-11-30T20:11:10.609692887Z
+                      kubernetes.io/config.source: file
+Status:               Running
+SeccompProfile:       RuntimeDefault
+IP:                   192.168.49.2
+IPs:
+  IP:           192.168.49.2
+Controlled By:  Node/minicluster
+Containers:
+  kube-apiserver:
+    Container ID:  docker://bf3be09944f3e701d1c0178f7b457a8bd1211ac68b5615d49b258746646e42d1
+    Image:         registry.k8s.io/kube-apiserver:v1.27.4
+    Image ID:      docker-pullable://registry.k8s.io/kube-apiserver@sha256:697cd88d94f7f2ef42144cb3072b016dcb2e9251f0e7d41a7fede557e555452d
+    Port:          <none>
+    Host Port:     <none>
+    Command:
+      kube-apiserver
+      --advertise-address=192.168.49.2
+      --allow-privileged=true
+      --authorization-mode=Node,RBAC
+      --client-ca-file=/var/lib/minikube/certs/ca.crt
+      --enable-admission-plugins=NamespaceLifecycle,LimitRanger,ServiceAccount,DefaultStorageClass,DefaultTolerationSeconds,NodeRestriction,MutatingAdmissionWebhook,ValidatingAdmissionWebhook,ResourceQuota
+      --enable-bootstrap-token-auth=true
+      --etcd-cafile=/var/lib/minikube/certs/etcd/ca.crt
+      --etcd-certfile=/var/lib/minikube/certs/apiserver-etcd-client.crt
+      --etcd-keyfile=/var/lib/minikube/certs/apiserver-etcd-client.key
+      --etcd-servers=https://127.0.0.1:2379
+      --kubelet-client-certificate=/var/lib/minikube/certs/apiserver-kubelet-client.crt
+      --kubelet-client-key=/var/lib/minikube/certs/apiserver-kubelet-client.key
+      --kubelet-preferred-address-types=InternalIP,ExternalIP,Hostname
+      --proxy-client-cert-file=/var/lib/minikube/certs/front-proxy-client.crt
+      --proxy-client-key-file=/var/lib/minikube/certs/front-proxy-client.key
+      --requestheader-allowed-names=front-proxy-client
+      --requestheader-client-ca-file=/var/lib/minikube/certs/front-proxy-ca.crt
+      --requestheader-extra-headers-prefix=X-Remote-Extra-
+      --requestheader-group-headers=X-Remote-Group
+      --requestheader-username-headers=X-Remote-User
+      --secure-port=8443
+      --service-account-issuer=https://kubernetes.default.svc.cluster.local
+      --service-account-key-file=/var/lib/minikube/certs/sa.pub
+      --service-account-signing-key-file=/var/lib/minikube/certs/sa.key
+      --service-cluster-ip-range=10.96.0.0/12
+      --tls-cert-file=/var/lib/minikube/certs/apiserver.crt
+      --tls-private-key-file=/var/lib/minikube/certs/apiserver.key
+    State:          Running
+      Started:      Wed, 06 Dec 2023 20:05:23 +0100
+    Last State:     Terminated
+      Reason:       Error
+      Exit Code:    1
+      Started:      Wed, 06 Dec 2023 19:42:57 +0100
+      Finished:     Wed, 06 Dec 2023 20:04:55 +0100
+    Ready:          True
+    Restart Count:  2
+    Requests:
+      cpu:        250m
+    Liveness:     http-get https://192.168.49.2:8443/livez delay=10s timeout=15s period=10s #success=1 #failure=8
+    Readiness:    http-get https://192.168.49.2:8443/readyz delay=0s timeout=15s period=1s #success=1 #failure=3
+    Startup:      http-get https://192.168.49.2:8443/livez delay=10s timeout=15s period=10s #success=1 #failure=24
+    Environment:  <none>
+    Mounts:
+      /etc/ca-certificates from etc-ca-certificates (ro)
+      /etc/ssl/certs from ca-certs (ro)
+      /usr/local/share/ca-certificates from usr-local-share-ca-certificates (ro)
+      /usr/share/ca-certificates from usr-share-ca-certificates (ro)
+      /var/lib/minikube/certs from k8s-certs (ro)
+Conditions:
+  Type              Status
+  Initialized       True 
+  Ready             True 
+  ContainersReady   True 
+  PodScheduled      True 
+Volumes:
+  ca-certs:
+    Type:          HostPath (bare host directory volume)
+    Path:          /etc/ssl/certs
+    HostPathType:  DirectoryOrCreate
+  etc-ca-certificates:
+    Type:          HostPath (bare host directory volume)
+    Path:          /etc/ca-certificates
+    HostPathType:  DirectoryOrCreate
+  k8s-certs:
+    Type:          HostPath (bare host directory volume)
+    Path:          /var/lib/minikube/certs
+    HostPathType:  DirectoryOrCreate
+  usr-local-share-ca-certificates:
+    Type:          HostPath (bare host directory volume)
+    Path:          /usr/local/share/ca-certificates
+    HostPathType:  DirectoryOrCreate
+  usr-share-ca-certificates:
+    Type:          HostPath (bare host directory volume)
+    Path:          /usr/share/ca-certificates
+    HostPathType:  DirectoryOrCreate
+QoS Class:         Burstable
+Node-Selectors:    <none>
+Tolerations:       :NoExecute op=Exists
+Events:
+  Type     Reason     Age                   From     Message
+  ----     ------     ----                  ----     -------
+  Warning  Unhealthy  7m35s (x13 over 22h)  kubelet  Readiness probe failed: HTTP probe failed with statuscode: 500
+med@med-pad-100:~/rbac$ kubectl run admitted --image=nginx --image-pull-policy=IfNotPresent
+pod/admitted created
+med@med-pad-100:~/rbac$ kubectl -n describe pod admitted
+Error: flags cannot be placed before plugin name: -n
+med@med-pad-100:~/rbac$ kubectl  describe pod admitted
+Name:             admitted
+Namespace:        default
+Priority:         0
+Service Account:  default
+Node:             minicluster-m02/192.168.49.3
+Start Time:       Thu, 07 Dec 2023 19:07:50 +0100
+Labels:           run=admitted
+Annotations:      <none>
+Status:           Running
+IP:               10.244.1.3
+IPs:
+  IP:  10.244.1.3
+Containers:
+  admitted:
+    Container ID:   docker://6b618ff8a25ef183bf30be2a3c3b77610476b4d8de25d7e373431e6e41e8e63b
+    Image:          nginx
+    Image ID:       docker-pullable://nginx@sha256:10d1f5b58f74683ad34eb29287e07dab1e90f10af243f151bb50aa5dbb4d62ee
+    Port:           <none>
+    Host Port:      <none>
+    State:          Running
+      Started:      Thu, 07 Dec 2023 19:14:08 +0100
+    Ready:          True
+    Restart Count:  0
+    Environment:    <none>
+    Mounts:
+      /var/run/secrets/kubernetes.io/serviceaccount from kube-api-access-7xtsj (ro)
+Conditions:
+  Type              Status
+  Initialized       True 
+  Ready             True 
+  ContainersReady   True 
+  PodScheduled      True 
+Volumes:
+  kube-api-access-7xtsj:
+    Type:                    Projected (a volume that contains injected data from multiple sources)
+    TokenExpirationSeconds:  3607
+    ConfigMapName:           kube-root-ca.crt
+    ConfigMapOptional:       <nil>
+    DownwardAPI:             true
+QoS Class:                   BestEffort
+Node-Selectors:              <none>
+Tolerations:                 node.kubernetes.io/not-ready:NoExecute op=Exists for 300s
+                             node.kubernetes.io/unreachable:NoExecute op=Exists for 300s
+Events:
+  Type    Reason     Age   From               Message
+  ----    ------     ----  ----               -------
+  Normal  Scheduled  44m   default-scheduler  Successfully assigned default/admitted to minicluster-m02
+  Normal  Pulling    43m   kubelet            Pulling image "nginx"
+  Normal  Pulled     37m   kubelet            Successfully pulled image "nginx" in 5m58.506712926s (5m58.506818544s including waiting)
+  Normal  Created    37m   kubelet            Created container admitted
+  Normal  Started    37m   kubelet            Started container admitted
+med@med-pad-100:~/rbac$ kubectl get pod  admitted -o yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  creationTimestamp: "2023-12-07T18:07:46Z"
+  labels:
+    run: admitted
+  name: admitted
+  namespace: default
+  resourceVersion: "42066"
+  uid: e1f36ec7-d172-47cc-a540-772ab5472da4
+spec:
+  containers:
+  - image: nginx
+    imagePullPolicy: IfNotPresent
+    name: admitted
+    resources: {}
+    terminationMessagePath: /dev/termination-log
+    terminationMessagePolicy: File
+    volumeMounts:
+    - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+      name: kube-api-access-7xtsj
+      readOnly: true
+  dnsPolicy: ClusterFirst
+  enableServiceLinks: true
+  nodeName: minicluster-m02
+  preemptionPolicy: PreemptLowerPriority
+  priority: 0
+  restartPolicy: Always
+  schedulerName: default-scheduler
+  securityContext: {}
+  serviceAccount: default
+  serviceAccountName: default
+  terminationGracePeriodSeconds: 30
+  tolerations:
+  - effect: NoExecute
+    key: node.kubernetes.io/not-ready
+    operator: Exists
+    tolerationSeconds: 300
+  - effect: NoExecute
+    key: node.kubernetes.io/unreachable
+    operator: Exists
+    tolerationSeconds: 300
+  volumes:
+  - name: kube-api-access-7xtsj
+    projected:
+      defaultMode: 420
+      sources:
+      - serviceAccountToken:
+          expirationSeconds: 3607
+          path: token
+      - configMap:
+          items:
+          - key: ca.crt
+            path: ca.crt
+          name: kube-root-ca.crt
+      - downwardAPI:
+          items:
+          - fieldRef:
+              apiVersion: v1
+              fieldPath: metadata.namespace
+            path: namespace
+status:
+  conditions:
+  - lastProbeTime: null
+    lastTransitionTime: "2023-12-07T18:07:50Z"
+    status: "True"
+    type: Initialized
+  - lastProbeTime: null
+    lastTransitionTime: "2023-12-07T18:14:09Z"
+    status: "True"
+    type: Ready
+  - lastProbeTime: null
+    lastTransitionTime: "2023-12-07T18:14:09Z"
+    status: "True"
+    type: ContainersReady
+  - lastProbeTime: null
+    lastTransitionTime: "2023-12-07T18:07:48Z"
+    status: "True"
+    type: PodScheduled
+  containerStatuses:
+  - containerID: docker://6b618ff8a25ef183bf30be2a3c3b77610476b4d8de25d7e373431e6e41e8e63b
+    image: nginx:latest
+    imageID: docker-pullable://nginx@sha256:10d1f5b58f74683ad34eb29287e07dab1e90f10af243f151bb50aa5dbb4d62ee
+    lastState: {}
+    name: admitted
+    ready: true
+    restartCount: 0
+    started: true
+    state:
+      running:
+        startedAt: "2023-12-07T18:14:08Z"
+  hostIP: 192.168.49.3
+  phase: Running
+  podIP: 10.244.1.3
+  podIPs:
+  - ip: 10.244.1.3
+  qosClass: BestEffort
+  startTime: "2023-12-07T18:07:50Z"
+med@med-pad-100:~/rbac$ kubectl get pod  admitted -o yaml | grep -i policy
+    imagePullPolicy: IfNotPresent
+    terminationMessagePolicy: File
+  dnsPolicy: ClusterFirst
+  preemptionPolicy: PreemptLowerPriority
+  restartPolicy: Always
+med@med-pad-100:~/rbac$ kubectl get pod  admitted 
+NAME       READY   STATUS    RESTARTS   AGE
+admitted   1/1     Running   0          80m
+med@med-pad-100:~/rbac$ kubectl get pod  admitted -o wide
+NAME       READY   STATUS    RESTARTS   AGE   IP           NODE              NOMINATED NODE   READINESS GATES
+admitted   1/1     Running   0          80m   10.244.1.3   minicluster-m02   <none>           <none>
+med@med-pad-100:~/rbac$ kubectl -n kube-system describe pod kube-apiserver-minicluster | grep -i admission
+      --enable-admission-plugins=NamespaceLifecycle,LimitRanger,ServiceAccount,DefaultStorageClass,DefaultTolerationSeconds,NodeRestriction,MutatingAdmissionWebhook,ValidatingAdmissionWebhook,ResourceQuota
+med@med-pad-100:~/rbac$ minicluster ssh
+minicluster : commande introuvable
+med@med-pad-100:~/rbac$ minikube ssh
+❗  L'exécution de "docker container inspect minicluster --format={{.State.Status}}" a pris un temps inhabituellement long : 3.561209354s
+💡  Le redémarrage du service docker peut améliorer les performances.
+docker@minicluster:~$ exit
+logout
+med@med-pad-100:~/rbac$ minikube ssh
+docker@minicluster:~$ sudo grep admission /etc/kubernetes/manifests/kube-apiserver.yaml
+    - --enable-admission-plugins=NamespaceLifecycle,LimitRanger,ServiceAccount,DefaultStorageClass,DefaultTolerationSeconds,NodeRestriction,MutatingAdmissionWebhook,ValidatingAdmissionWebhook,ResourceQuota
+docker@minicluster:~$ minicluster-m02 ssh 
+-bash: minicluster-m02: command not found
+docker@minicluster:~$ ping 10.244.1.3
+PING 10.244.1.3 (10.244.1.3) 56(84) bytes of data.
+64 bytes from 10.244.1.3: icmp_seq=1 ttl=63 time=0.278 ms
+64 bytes from 10.244.1.3: icmp_seq=2 ttl=63 time=0.197 ms
+64 bytes from 10.244.1.3: icmp_seq=3 ttl=63 time=0.117 ms
+64 bytes from 10.244.1.3: icmp_seq=4 ttl=63 time=0.147 ms
+64 bytes from 10.244.1.3: icmp_seq=5 ttl=63 time=0.130 ms
+64 bytes from 10.244.1.3: icmp_seq=6 ttl=63 time=0.130 ms
+64 bytes from 10.244.1.3: icmp_seq=7 ttl=63 time=0.126 ms
+^C
+--- 10.244.1.3 ping statistics ---
+7 packets transmitted, 7 received, 0% packet loss, time 6146ms
+rtt min/avg/max/mdev = 0.117/0.160/0.278/0.053 ms
+docker@minicluster:~$ ifconfig
+-bash: ifconfig: command not found
+docker@minicluster:~$ ls
+docker@minicluster:~$ ls -l
+total 0
+docker@minicluster:~$ sudo cat /etc/kubernetes/manifests/kube-apiserver.yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  annotations:
+    kubeadm.kubernetes.io/kube-apiserver.advertise-address.endpoint: 192.168.49.2:8443
+  creationTimestamp: null
+  labels:
+    component: kube-apiserver
+    tier: control-plane
+  name: kube-apiserver
+  namespace: kube-system
+spec:
+  containers:
+  - command:
+    - kube-apiserver
+    - --advertise-address=192.168.49.2
+    - --allow-privileged=true
+    - --authorization-mode=Node,RBAC
+    - --client-ca-file=/var/lib/minikube/certs/ca.crt
+    - --enable-admission-plugins=NamespaceLifecycle,LimitRanger,ServiceAccount,DefaultStorageClass,DefaultTolerationSeconds,NodeRestriction,MutatingAdmissionWebhook,ValidatingAdmissionWebhook,ResourceQuota
+    - --enable-bootstrap-token-auth=true
+    - --etcd-cafile=/var/lib/minikube/certs/etcd/ca.crt
+    - --etcd-certfile=/var/lib/minikube/certs/apiserver-etcd-client.crt
+    - --etcd-keyfile=/var/lib/minikube/certs/apiserver-etcd-client.key
+    - --etcd-servers=https://127.0.0.1:2379
+    - --kubelet-client-certificate=/var/lib/minikube/certs/apiserver-kubelet-client.crt
+    - --kubelet-client-key=/var/lib/minikube/certs/apiserver-kubelet-client.key
+    - --kubelet-preferred-address-types=InternalIP,ExternalIP,Hostname
+    - --proxy-client-cert-file=/var/lib/minikube/certs/front-proxy-client.crt
+    - --proxy-client-key-file=/var/lib/minikube/certs/front-proxy-client.key
+    - --requestheader-allowed-names=front-proxy-client
+    - --requestheader-client-ca-file=/var/lib/minikube/certs/front-proxy-ca.crt
+    - --requestheader-extra-headers-prefix=X-Remote-Extra-
+    - --requestheader-group-headers=X-Remote-Group
+    - --requestheader-username-headers=X-Remote-User
+    - --secure-port=8443
+    - --service-account-issuer=https://kubernetes.default.svc.cluster.local
+    - --service-account-key-file=/var/lib/minikube/certs/sa.pub
+    - --service-account-signing-key-file=/var/lib/minikube/certs/sa.key
+    - --service-cluster-ip-range=10.96.0.0/12
+    - --tls-cert-file=/var/lib/minikube/certs/apiserver.crt
+    - --tls-private-key-file=/var/lib/minikube/certs/apiserver.key
+    image: registry.k8s.io/kube-apiserver:v1.27.4
+    imagePullPolicy: IfNotPresent
+    livenessProbe:
+      failureThreshold: 8
+      httpGet:
+        host: 192.168.49.2
+        path: /livez
+        port: 8443
+        scheme: HTTPS
+      initialDelaySeconds: 10
+      periodSeconds: 10
+      timeoutSeconds: 15
+    name: kube-apiserver
+    readinessProbe:
+      failureThreshold: 3
+      httpGet:
+        host: 192.168.49.2
+        path: /readyz
+        port: 8443
+        scheme: HTTPS
+      periodSeconds: 1
+      timeoutSeconds: 15
+    resources:
+      requests:
+        cpu: 250m
+    startupProbe:
+      failureThreshold: 24
+      httpGet:
+        host: 192.168.49.2
+        path: /livez
+        port: 8443
+        scheme: HTTPS
+      initialDelaySeconds: 10
+      periodSeconds: 10
+      timeoutSeconds: 15
+    volumeMounts:
+    - mountPath: /etc/ssl/certs
+      name: ca-certs
+      readOnly: true
+    - mountPath: /etc/ca-certificates
+      name: etc-ca-certificates
+      readOnly: true
+    - mountPath: /var/lib/minikube/certs
+      name: k8s-certs
+      readOnly: true
+    - mountPath: /usr/local/share/ca-certificates
+      name: usr-local-share-ca-certificates
+      readOnly: true
+    - mountPath: /usr/share/ca-certificates
+      name: usr-share-ca-certificates
+      readOnly: true
+  hostNetwork: true
+  priority: 2000001000
+  priorityClassName: system-node-critical
+  securityContext:
+    seccompProfile:
+      type: RuntimeDefault
+  volumes:
+  - hostPath:
+      path: /etc/ssl/certs
+      type: DirectoryOrCreate
+    name: ca-certs
+  - hostPath:
+      path: /etc/ca-certificates
+      type: DirectoryOrCreate
+    name: etc-ca-certificates
+  - hostPath:
+      path: /var/lib/minikube/certs
+      type: DirectoryOrCreate
+    name: k8s-certs
+  - hostPath:
+      path: /usr/local/share/ca-certificates
+      type: DirectoryOrCreate
+    name: usr-local-share-ca-certificates
+  - hostPath:
+      path: /usr/share/ca-certificates
+      type: DirectoryOrCreate
+    name: usr-share-ca-certificates
+status: {}
+docker@minicluster:~$ ping 192.168.49.2
+PING 192.168.49.2 (192.168.49.2) 56(84) bytes of data.
+64 bytes from 192.168.49.2: icmp_seq=1 ttl=64 time=0.094 ms
+64 bytes from 192.168.49.2: icmp_seq=2 ttl=64 time=0.069 ms
+64 bytes from 192.168.49.2: icmp_seq=3 ttl=64 time=0.073 ms
+64 bytes from 192.168.49.2: icmp_seq=4 ttl=64 time=0.097 ms
+64 bytes from 192.168.49.2: icmp_seq=5 ttl=64 time=0.047 ms
+64 bytes from 192.168.49.2: icmp_seq=6 ttl=64 time=0.088 ms
+^C
+--- 192.168.49.2 ping statistics ---
+6 packets transmitted, 6 received, 0% packet loss, time 5110ms
+rtt min/avg/max/mdev = 0.047/0.078/0.097/0.017 ms
+docker@minicluster:~$ sudo ls /etc/kubernetes/manifests/                   
+etcd.yaml  kube-apiserver.yaml	kube-controller-manager.yaml  kube-scheduler.yaml
+docker@minicluster:~$ sudo ls /etc/kubernetes/          
+addons	admin.conf  controller-manager.conf  kubelet.conf  manifests  scheduler.conf
+docker@minicluster:~$ sudo cat  /etc/kubernetes/scheduler.conf
+apiVersion: v1
+clusters:
+- cluster:
+    certificate-authority-data: LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tCk1JSURCakNDQWU2Z0F3SUJBZ0lCQVRBTkJna3Foa2lHOXcwQkFRc0ZBREFWTVJNd0VRWURWUVFERXdwdGFXNXAKYTNWaVpVTkJNQjRYRFRJek1URXdNekV6TXpNek5Wb1hEVE16TVRFd01URXpNek16TlZvd0ZURVRNQkVHQTFVRQpBeE1LYldsdWFXdDFZbVZEUVRDQ0FTSXdEUVlKS29aSWh2Y05BUUVCQlFBRGdnRVBBRENDQVFvQ2dnRUJBTnZkCkNyeWQ0b3BkRm82K2NwbkdiYzlmRHdIeHQvM0VUQzJFdGY2TXMyT1JpSVArb0xMY2dGQjdRdlU2NHZZbDlPSnAKN0VkWC90ekE3Wm5vQm94enM5SnlWbml0aTdIVHBOREZ2bDU5bGY5K1pYL2dmTEtKcGI5S2NnTFNuakk2a3QrdgorVmkrdEx2Zm5Jb3QvS0xJbSsvYUh5ZUc3SFV4OE9wVGh2TTJuaWMrdkFsWW01aHlrSkJXMVJ1NndzTEVLVCt5CjllUDBzQjFXeWdqcEdpdGFiL2JLSmRGKzl6N1NLZ2t5NUdkSGZyUml1bkVucjFFK0RvK1lnRW8rV3R4VGdTRkIKZEp5dGVjOUZoUys1bzEyaW5KR0hIRlA0VEViM04rUXJGb3NFZjB5eDhHdWplZGhHQTJjemZZR0x4QXZqTGRpcwozVnE5bDBkKzNYUVlnTmoyR0xVQ0F3RUFBYU5oTUY4d0RnWURWUjBQQVFIL0JBUURBZ0trTUIwR0ExVWRKUVFXCk1CUUdDQ3NHQVFVRkJ3TUNCZ2dyQmdFRkJRY0RBVEFQQmdOVkhSTUJBZjhFQlRBREFRSC9NQjBHQTFVZERnUVcKQkJSMFQzY25MaFoyV0xVREVJREhqU1JHcHZVYnN6QU5CZ2txaGtpRzl3MEJBUXNGQUFPQ0FRRUFZa3dTOUN6TQpJR2xoSjBucyswbVBZQ29tU0phWVg3cFFHYUhXNkd3NUlHaDFlaFRMdnNFdGM2dGVjRmJkSXJuYkNhRURLalZsCkNtR3NBalA2U3lFZk0rSk8yNVNkMGJXa0s1RmRwcmJRVlRMcXVUdTkzRFJBME1NRlVzcmFwbUhOTDh3dFR0a2oKZ0g4cHlHc0dYTm1nVFhRR05zR0VYNFpQL2hPQ2VBMHVnRVdENnkwcTZHdnZab203SEx0RHJva0FveUdzQXVQZwo2L3lkbGRIMis1SHQ1MFl1c1cxL2QxTjJjQ2xtMXY4MFRPd016ckg5dmg2bHFaWGpoNkRlQ0ZkOEt2OGZCcFNNCjdOWnNmYmszNFB2TDVUTEhuK1lMR3dUb0w4dmp5U2FxeFdvTUZtVW8rWTBpL0lHallqdFRBaG9ab3M3VUJPblMKanRYUzRyUlNkTndXMnc9PQotLS0tLUVORCBDRVJUSUZJQ0FURS0tLS0tCg==
+    server: https://192.168.49.2:8443
+  name: mk
+contexts:
+- context:
+    cluster: mk
+    user: system:kube-scheduler
+  name: system:kube-scheduler@mk
+current-context: system:kube-scheduler@mk
+kind: Config
+preferences: {}
+users:
+- name: system:kube-scheduler
+  user:
+    client-certificate-data: LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tCk1JSUREVENDQWZXZ0F3SUJBZ0lJVHNiYzYxZ2hvamt3RFFZSktvWklodmNOQVFFTEJRQXdGVEVUTUJFR0ExVUUKQXhNS2JXbHVhV3QxWW1WRFFUQWVGdzB5TXpFeE1ETXhNek16TXpWYUZ3MHlOREV5TURVeE9EUXlORE5hTUNBeApIakFjQmdOVkJBTVRGWE41YzNSbGJUcHJkV0psTFhOamFHVmtkV3hsY2pDQ0FTSXdEUVlKS29aSWh2Y05BUUVCCkJRQURnZ0VQQURDQ0FRb0NnZ0VCQUxIMUJlbERlb1hSdVNBSlJkalBrMGVFVnhLQ2VGMmdGbU41Y0dNRkpNaisKSkl3U2l6ZGhLVWJheGZYOFVNSEpLbG5YVlJ6bVRaQ1VWYmZrK3FlSzBUMXNWdDNlekpNUE9ZZWkvQ1RPZElVUwpLR0l3ZlBFa0RadTBLMUordm1ueDhrc2lDeWRUMnJ0bm9Hc056SUNlK3B6VFJaZnNETVRRTW9CWnd0WS8vaVNxCnhKaXhWUXEvV3NHdE4rUXJObE9wdkE3dnhFN04xNHp2R0YrMnRYaHRZT0cralh3ZGV6cy85cWdseUZJRk1Gd2QKRnVrSGIwczBXRWI2RnFDdDB0Nml6M21kaEVWYWQrbXVMNWJwQktSWlg0eVRPc2ZyTDRSOERUNUZFa2FwWks5LwpiYnRIZUY5dU80REJkajRLbHVJdzU1V3JNUTdkTE9QU2tBNXpZSGZ0Ymc4Q0F3RUFBYU5XTUZRd0RnWURWUjBQCkFRSC9CQVFEQWdXZ01CTUdBMVVkSlFRTU1Bb0dDQ3NHQVFVRkJ3TUNNQXdHQTFVZEV3RUIvd1FDTUFBd0h3WUQKVlIwakJCZ3dGb0FVZEU5M0p5NFdkbGkxQXhDQXg0MGtScWIxRzdNd0RRWUpLb1pJaHZjTkFRRUxCUUFEZ2dFQgpBQTQ2ZHZQb1Z0Y0NPaFRBWEQrU0g0dWJodHoyV1dvTEtTdkVacE5YY0FsLzlEbUJqb0xPMnBDOFo0Q2RGQ2MyCksrYlloL1VqbVdiNTlCZmNRR1huZnd6Z3VtaWVKcUxHU0lLcldrUXZISWFVSWFKb2JodVhQTGFQSFNWVmxTeUEKZitWSGtOOS90N3ZNQXp0ZG9VNk9Gei9NQkJ4ZjN3TE40c1ZLTHF3WllpajRMNTR4NFdUOGFpZ0R4WjNRUCt6bQo1T21yelBHbktPcVh3bmhKVnpDRFlkYmRQcFVHb1FmaFZsYnAxSUlLQTgycEZmZHpTQUpaRUdMc1Z4bGhsRXVsCjhpOGVVUTZhOUpOVVZIaTcwSEhlOEcxMGVKVzVRL2o1czNkM2wwTjRWMnQ1SStmNlczcHlsOStzb0h3bEphYzUKZ0hXUndUZFFhN3NaeHM1TVZVVjl2VDQ9Ci0tLS0tRU5EIENFUlRJRklDQVRFLS0tLS0K
+    client-key-data: LS0tLS1CRUdJTiBSU0EgUFJJVkFURSBLRVktLS0tLQpNSUlFcFFJQkFBS0NBUUVBc2ZVRjZVTjZoZEc1SUFsRjJNK1RSNFJYRW9KNFhhQVdZM2x3WXdVa3lQNGtqQktMCk4yRXBSdHJGOWZ4UXdja3FXZGRWSE9aTmtKUlZ0K1Q2cDRyUlBXeFczZDdNa3c4NWg2TDhKTTUwaFJJb1lqQjgKOFNRTm03UXJVbjYrYWZIeVN5SUxKMVBhdTJlZ2F3M01nSjc2bk5ORmwrd014TkF5Z0ZuQzFqLytKS3JFbUxGVgpDcjlhd2EwMzVDczJVNm04RHUvRVRzM1hqTzhZWDdhMWVHMWc0YjZOZkIxN096LzJxQ1hJVWdVd1hCMFc2UWR2ClN6UllSdm9Xb0szUzNxTFBlWjJFUlZwMzZhNHZsdWtFcEZsZmpKTTZ4K3N2aEh3TlBrVVNScWxrcjM5dHUwZDQKWDI0N2dNRjJQZ3FXNGpEbmxhc3hEdDBzNDlLUURuTmdkKzF1RHdJREFRQUJBb0lCQUVwTVJIV0phTVFxTmFKOApmSjd5dTBqbXBmdmlZU0tsemZNbUpwZ1E4N1MrOXI5TWxyYytaNTlmZzdzWjV4V2hTWDlNK2dvZzFVMkJ3UEFRCk45NXZoTUNpVlBvNUpTeFk5T24rVUV1RnJ2eElBbmhNU2ozYmtacnFkQlB6T3NpODdTNFZQcGJpMmJYWXBBOU8KS1kyaDBueGJjUGptNHNYaEx0U0xwVjhTUktkRnVwV1VUZDk4b1haQ1FUaCtHYnFXSWdSZlhIZEFLNTBCWjlTcwpWYmN0MW1ZVmxtRitKbG5kdGhKZEhGS1RxRUNiN3hmM05LbFEzWVg5OTNGQVowK0hMdWxvbGFRczB4WkppNGdYCk9oMmFPakZZaUQrUkVQVnh4aWhyZ010VzVsblZaM0FreW9pR3VlTWZkQ1BOekpIbFp0cmhLME1mTkcvSEFUZzMKL3B5VytsRUNnWUVBejFqSUNPVVZRYXpFSXphdEhYNmdlVmk3NndXK0hiYXBDN0lzOG14bTNzUDB6ZE9FOWxKbApVUVU3NXdJWWpHb09lejJnRFpDbUQxbnNrTEMxaGcyN25CSWVxa3RHSDBrVkdUUmQzZHVYK0hEM3RVMWFUd1RBCkFVL29Ob1VaalZJNkZsOXU3bWJxS2lSbU9FK0IyR1RuWFIzRG52Qy9rYWhja0hGeTFqRG9Edk1DZ1lFQTI3YlIKZTJweUFreitSSWxGdHlZUGo1aE9jeE1EMWU1NlA1ZThySURpOVpJVmRCSUR3blFYRWFST1VmWTgwRjJUTDV1egptK0dKbVZldDFidW5BbSttM1ZLNjFTUmRTdlVGWUQ2ejdGYXU5RjZOZENhRWhhV2piTnVkeS9TSlZSVitYU0JXCjI1NHpHTVdzbHhvUEhMQmFVWS96Q2pwUGRhRm8ybkNNcjVWM1EzVUNnWUVBeXJGZGl1UjI3U2E0N2p1SzYrUlgKZDRoNDIzMVhwckJqZkoySE5zMGxtdXN3cXV6MWM5NkVVTG12SDFwN0tQaWNnM2x3dHhJS1k4TmljT2R0N0VnTQplTHQxNHIrSEl4cE1WOEZMYVpBN2RaRHBkZ0RTSWFEaEdlZEZkOWFSYmdkTjVZVVJhbGlNM1BtTU84dnRnTjdUCkZjSDg4NmtoZklCN1RIQzY5QXdITG1VQ2dZRUFub21QSkllTlZuMnA1MWhKOXJxKzliVkh2aDhWWUhPZ3dHeEQKMXhGMU13OUM3YXJtRFpUbzVIRHpsbzZnR1JXOFU5ajh3OWo5Q2FuTHBIS3dNc0RQM2RtSk9LenhxRm1lbEhFSwpNTm5uaWlzRDFMREtaUWs5SUJwa0JUd2hNRVMvRm9GMFN5b2U0cHdZU2p1aWRlZ0djOTN6MkFoMU40TE5mdmxCCmVweldIdFVDZ1lFQXJjVlVGN09zaitkQWpnRWpPVCs3OHc4SVU1SlE2bTZmOEFwa0ExbmhScHBNcEFUejV1NGsKQWhrekRVVHVTK1E2WTR3cTltL3g0RGpDckU4VFJtbEFLSE5yWitzVjloMlVCeGhWcWN6RmVkdHZPVW5NTTA2Vwo4VHV4QkJDend6QVU4SHhUMjkxS2RWRVNYTG5UZHFKdWhaUUlFTmdRZCs3VTgwTlZHR0NWdHZFPQotLS0tLUVORCBSU0EgUFJJVkFURSBLRVktLS0tLQo=
+docker@minicluster:~$ sudo ls /etc/kubernetes/
+addons	admin.conf  controller-manager.conf  kubelet.conf  manifests  scheduler.conf
+docker@minicluster:~$ sudo ls /etc/kubernetes/addons        
+storage-provisioner.yaml  storageclass.yaml
+docker@minicluster:~$ sudo cp /etc/kubernetes^C
+docker@minicluster:~$ sudo cp /etc/kubernetes/manifests/kube-apiserver.yaml / /kube-apiserver-backup.yaml 
+cp: target '/kube-apiserver-backup.yaml' is not a directory
+docker@minicluster:~$ sudo cp /etc/kubernetes/manifests/kube-apiserver.yaml  /kube-apiserver-backup.yaml 
+docker@minicluster:~$ ls 
+docker@minicluster:~$ sudo ls
+docker@minicluster:~$ sudo ls -l
+total 0
+docker@minicluster:~$ sudo cp /etc/kubernetes/manifests/kube-apiserver.yaml  /kube-apiserver-backup-yaml 
+docker@minicluster:~$ sudo ls /
+CHANGELOG    dev	 kind			     lib64   proc  sys
+Release.key  docker.key  kube-apiserver-backup-yaml  libx32  root  tmp
+bin	     etc	 kube-apiserver-backup.yaml  media   run   usr
+boot	     home	 lib			     mnt     sbin  var
+data	     kic.txt	 lib32			     opt     srv   version.json
+docker@minicluster:~$ sudo rm /kube-apiserver-backup.yaml
+docker@minicluster:~$ sudo ls /
+CHANGELOG    data	 home			     lib     media  root  sys  version.json
+Release.key  dev	 kic.txt		     lib32   mnt    run   tmp
+bin	     docker.key  kind			     lib64   opt    sbin  usr
+boot	     etc	 kube-apiserver-backup-yaml  libx32  proc   srv   var
+docker@minicluster:~$ sudo ls /kube-apiserver-backup-yaml
+/kube-apiserver-backup-yaml
+docker@minicluster:~$ sudo ls -l /kube-apiserver-backup-yaml
+-rw------- 1 root root 4099 Dec  7 20:29 /kube-apiserver-backup-yaml
+docker@minicluster:~$ sudo cat /kube-apiserver-backup-yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  annotations:
+    kubeadm.kubernetes.io/kube-apiserver.advertise-address.endpoint: 192.168.49.2:8443
+  creationTimestamp: null
+  labels:
+    component: kube-apiserver
+    tier: control-plane
+  name: kube-apiserver
+  namespace: kube-system
+spec:
+  containers:
+  - command:
+    - kube-apiserver
+    - --advertise-address=192.168.49.2
+    - --allow-privileged=true
+    - --authorization-mode=Node,RBAC
+    - --client-ca-file=/var/lib/minikube/certs/ca.crt
+    - --enable-admission-plugins=NamespaceLifecycle,LimitRanger,ServiceAccount,DefaultStorageClass,DefaultTolerationSeconds,NodeRestriction,MutatingAdmissionWebhook,ValidatingAdmissionWebhook,ResourceQuota
+    - --enable-bootstrap-token-auth=true
+    - --etcd-cafile=/var/lib/minikube/certs/etcd/ca.crt
+    - --etcd-certfile=/var/lib/minikube/certs/apiserver-etcd-client.crt
+    - --etcd-keyfile=/var/lib/minikube/certs/apiserver-etcd-client.key
+    - --etcd-servers=https://127.0.0.1:2379
+    - --kubelet-client-certificate=/var/lib/minikube/certs/apiserver-kubelet-client.crt
+    - --kubelet-client-key=/var/lib/minikube/certs/apiserver-kubelet-client.key
+    - --kubelet-preferred-address-types=InternalIP,ExternalIP,Hostname
+    - --proxy-client-cert-file=/var/lib/minikube/certs/front-proxy-client.crt
+    - --proxy-client-key-file=/var/lib/minikube/certs/front-proxy-client.key
+    - --requestheader-allowed-names=front-proxy-client
+    - --requestheader-client-ca-file=/var/lib/minikube/certs/front-proxy-ca.crt
+    - --requestheader-extra-headers-prefix=X-Remote-Extra-
+    - --requestheader-group-headers=X-Remote-Group
+    - --requestheader-username-headers=X-Remote-User
+    - --secure-port=8443
+    - --service-account-issuer=https://kubernetes.default.svc.cluster.local
+    - --service-account-key-file=/var/lib/minikube/certs/sa.pub
+    - --service-account-signing-key-file=/var/lib/minikube/certs/sa.key
+    - --service-cluster-ip-range=10.96.0.0/12
+    - --tls-cert-file=/var/lib/minikube/certs/apiserver.crt
+    - --tls-private-key-file=/var/lib/minikube/certs/apiserver.key
+    image: registry.k8s.io/kube-apiserver:v1.27.4
+    imagePullPolicy: IfNotPresent
+    livenessProbe:
+      failureThreshold: 8
+      httpGet:
+        host: 192.168.49.2
+        path: /livez
+        port: 8443
+        scheme: HTTPS
+      initialDelaySeconds: 10
+      periodSeconds: 10
+      timeoutSeconds: 15
+    name: kube-apiserver
+    readinessProbe:
+      failureThreshold: 3
+      httpGet:
+        host: 192.168.49.2
+        path: /readyz
+        port: 8443
+        scheme: HTTPS
+      periodSeconds: 1
+      timeoutSeconds: 15
+    resources:
+      requests:
+        cpu: 250m
+    startupProbe:
+      failureThreshold: 24
+      httpGet:
+        host: 192.168.49.2
+        path: /livez
+        port: 8443
+        scheme: HTTPS
+      initialDelaySeconds: 10
+      periodSeconds: 10
+      timeoutSeconds: 15
+    volumeMounts:
+    - mountPath: /etc/ssl/certs
+      name: ca-certs
+      readOnly: true
+    - mountPath: /etc/ca-certificates
+      name: etc-ca-certificates
+      readOnly: true
+    - mountPath: /var/lib/minikube/certs
+      name: k8s-certs
+      readOnly: true
+    - mountPath: /usr/local/share/ca-certificates
+      name: usr-local-share-ca-certificates
+      readOnly: true
+    - mountPath: /usr/share/ca-certificates
+      name: usr-share-ca-certificates
+      readOnly: true
+  hostNetwork: true
+  priority: 2000001000
+  priorityClassName: system-node-critical
+  securityContext:
+    seccompProfile:
+      type: RuntimeDefault
+  volumes:
+  - hostPath:
+      path: /etc/ssl/certs
+      type: DirectoryOrCreate
+    name: ca-certs
+  - hostPath:
+      path: /etc/ca-certificates
+      type: DirectoryOrCreate
+    name: etc-ca-certificates
+  - hostPath:
+      path: /var/lib/minikube/certs
+      type: DirectoryOrCreate
+    name: k8s-certs
+  - hostPath:
+      path: /usr/local/share/ca-certificates
+      type: DirectoryOrCreate
+    name: usr-local-share-ca-certificates
+  - hostPath:
+      path: /usr/share/ca-certificates
+      type: DirectoryOrCreate
+    name: usr-share-ca-certificates
+status: {}
+docker@minicluster:~$ sudo vi
+docker@minicluster:~$ sudo vi /etc/kubernetes/manifests/kube-apiserver.yaml
+docker@minicluster:~$ sudo vi /etc/kubernetes/manifests/kube-apiserver.yaml
+docker@minicluster:~$ sudo vi /etc/kubernetes/manifests/kube-apiserver.yaml
+docker@minicluster:~$ sudo vi /etc/kubernetes/manifests/kube-apiserver.yaml
+docker@minicluster:~$ sudo nano /etc/kubernetes/manifests/kube-apiserver.yaml
+sudo: nano: command not found
+docker@minicluster:~$ sudo vi /etc/kubernetes/manifests/kube-apiserver.yaml
+docker@minicluster:~$ sudo apt install nano
+Reading package lists... Done
+Building dependency tree... Done
+Reading state information... Done
+Package nano is not available, but is referred to by another package.
+This may mean that the package is missing, has been obsoleted, or
+is only available from another source
+
+E: Package 'nano' has no installation candidate
+docker@minicluster:~$ sudo apt get install nano
+E: Invalid operation get
+docker@minicluster:~$ sudo apt get nano
+E: Invalid operation get
+docker@minicluster:~$ sudo vi /etc/kubernetes/manifests/kube-apiserver.yaml
+docker@minicluster:~$ sudo vim /etc/kubernetes/manifests/kube-apiserver.yaml
+sudo: vim: command not found
+docker@minicluster:~$ sudo apt-get -y install nano
+Reading package lists... Done
+Building dependency tree... Done
+Reading state information... Done
+Package nano is not available, but is referred to by another package.
+This may mean that the package is missing, has been obsoleted, or
+is only available from another source
+
+E: Package 'nano' has no installation candidate
+docker@minicluster:~$ sudo vi /etc/kubernetes/manifests/kube-apiserver.yaml
+docker@minicluster:~$ sudo vi /etc/kubernetes/manifests/kube-apiserver.yaml
+docker@minicluster:~$ sudo vi /etc/kubernetes/manifests/kube-apiserver.yaml
+docker@minicluster:~$ sudo vi /etc/kubernetes/manifests/kube-apiserver.yaml
+docker@minicluster:~$ sudo vi /etc/kubernetes/manifests/kube-apiserver.yaml
+docker@minicluster:~$ sudo vi /etc/kubernetes/manifests/kube-apiserver.yaml
+docker@minicluster:~$ sudo vi /etc/kubernetes/manifests/kube-apiserver.yaml
+docker@minicluster:~$ exit
+logout
+med@med-pad-100:~/rbac$ kubectl get po -A
+NAMESPACE     NAME                                  READY   STATUS    RESTARTS       AGE
+default       admitted                              1/1     Running   0              4h24m
+kube-system   coredns-5d78c9869d-ksrr5              1/1     Running   9 (27h ago)    7d2h
+kube-system   etcd-minicluster                      1/1     Running   2 (27h ago)    7d2h
+kube-system   kindnet-6s7hd                         1/1     Running   18 (16m ago)   7d2h
+kube-system   kindnet-m2jld                         1/1     Running   18 (15m ago)   7d2h
+kube-system   kube-apiserver-minicluster            1/1     Running   0              12m
+kube-system   kube-controller-manager-minicluster   1/1     Running   3 (27h ago)    7d2h
+kube-system   kube-proxy-bwvmh                      1/1     Running   1 (7d ago)     7d2h
+kube-system   kube-proxy-mhs6l                      1/1     Running   2 (27h ago)    7d2h
+kube-system   kube-scheduler-minicluster            1/1     Running   2 (27h ago)    7d2h
+kube-system   storage-provisioner                   1/1     Running   22 (14m ago)   7d2h
+lfs158        nginx-5f8f49fff4-xnlzq                1/1     Running   0              23h
+med@med-pad-100:~/rbac$ kubectl -n kube-system describe pod kube-apiserver-minicluster | grep -i admission
+      --enable-admission-plugins=NamespaceLifecycle,LimitRanger,ServiceAccount,DefaultStorageClass,DefaultTolerationSeconds,NodeRestriction,MutatingAdmissionWebhook,ValidatingAdmissionWebhook,ResourceQuota,AlwaysPullImages
+med@med-pad-100:~/rbac$ kubectl describe pod kube-apiserver-minicluster -n kube-system
+Name:                 kube-apiserver-minicluster
+Namespace:            kube-system
+Priority:             2000001000
+Priority Class Name:  system-node-critical
+Node:                 minicluster/192.168.49.2
+Start Time:           Thu, 07 Dec 2023 23:19:34 +0100
+Labels:               component=kube-apiserver
+                      tier=control-plane
+Annotations:          kubeadm.kubernetes.io/kube-apiserver.advertise-address.endpoint: 192.168.49.2:8443
+                      kubernetes.io/config.hash: 61fe3f00f7e8ee45888e83968c520f08
+                      kubernetes.io/config.mirror: 61fe3f00f7e8ee45888e83968c520f08
+                      kubernetes.io/config.seen: 2023-12-07T22:18:54.103218840Z
+                      kubernetes.io/config.source: file
+Status:               Running
+SeccompProfile:       RuntimeDefault
+IP:                   192.168.49.2
+IPs:
+  IP:           192.168.49.2
+Controlled By:  Node/minicluster
+Containers:
+  kube-apiserver:
+    Container ID:  docker://4d832762fbb3e392121ca95b5d2c117138429d30f0d17f5e8d48b38e33e40163
+    Image:         registry.k8s.io/kube-apiserver:v1.27.4
+    Image ID:      docker-pullable://registry.k8s.io/kube-apiserver@sha256:697cd88d94f7f2ef42144cb3072b016dcb2e9251f0e7d41a7fede557e555452d
+    Port:          <none>
+    Host Port:     <none>
+    Command:
+      kube-apiserver
+      --advertise-address=192.168.49.2
+      --allow-privileged=true
+      --authorization-mode=Node,RBAC
+      --client-ca-file=/var/lib/minikube/certs/ca.crt
+      --enable-admission-plugins=NamespaceLifecycle,LimitRanger,ServiceAccount,DefaultStorageClass,DefaultTolerationSeconds,NodeRestriction,MutatingAdmissionWebhook,ValidatingAdmissionWebhook,ResourceQuota,AlwaysPullImages
+      --enable-bootstrap-token-auth=true
+      --etcd-cafile=/var/lib/minikube/certs/etcd/ca.crt
+      --etcd-certfile=/var/lib/minikube/certs/apiserver-etcd-client.crt
+      --etcd-keyfile=/var/lib/minikube/certs/apiserver-etcd-client.key
+      --etcd-servers=https://127.0.0.1:2379
+      --kubelet-client-certificate=/var/lib/minikube/certs/apiserver-kubelet-client.crt
+      --kubelet-client-key=/var/lib/minikube/certs/apiserver-kubelet-client.key
+      --kubelet-preferred-address-types=InternalIP,ExternalIP,Hostname
+      --proxy-client-cert-file=/var/lib/minikube/certs/front-proxy-client.crt
+      --proxy-client-key-file=/var/lib/minikube/certs/front-proxy-client.key
+      --requestheader-allowed-names=front-proxy-client
+      --requestheader-client-ca-file=/var/lib/minikube/certs/front-proxy-ca.crt
+      --requestheader-extra-headers-prefix=X-Remote-Extra-
+      --requestheader-group-headers=X-Remote-Group
+      --requestheader-username-headers=X-Remote-User
+      --secure-port=8443
+      --service-account-issuer=https://kubernetes.default.svc.cluster.local
+      --service-account-key-file=/var/lib/minikube/certs/sa.pub
+      --service-account-signing-key-file=/var/lib/minikube/certs/sa.key
+      --service-cluster-ip-range=10.96.0.0/12
+      --tls-cert-file=/var/lib/minikube/certs/apiserver.crt
+      --tls-private-key-file=/var/lib/minikube/certs/apiserver.key
+    State:          Running
+      Started:      Thu, 07 Dec 2023 23:18:59 +0100
+    Ready:          True
+    Restart Count:  0
+    Requests:
+      cpu:        250m
+    Liveness:     http-get https://192.168.49.2:8443/livez delay=10s timeout=15s period=10s #success=1 #failure=8
+    Readiness:    http-get https://192.168.49.2:8443/readyz delay=0s timeout=15s period=1s #success=1 #failure=3
+    Startup:      http-get https://192.168.49.2:8443/livez delay=10s timeout=15s period=10s #success=1 #failure=24
+    Environment:  <none>
+    Mounts:
+      /etc/ca-certificates from etc-ca-certificates (ro)
+      /etc/ssl/certs from ca-certs (ro)
+      /usr/local/share/ca-certificates from usr-local-share-ca-certificates (ro)
+      /usr/share/ca-certificates from usr-share-ca-certificates (ro)
+      /var/lib/minikube/certs from k8s-certs (ro)
+Conditions:
+  Type              Status
+  Initialized       True 
+  Ready             True 
+  ContainersReady   True 
+  PodScheduled      True 
+Volumes:
+  ca-certs:
+    Type:          HostPath (bare host directory volume)
+    Path:          /etc/ssl/certs
+    HostPathType:  DirectoryOrCreate
+  etc-ca-certificates:
+    Type:          HostPath (bare host directory volume)
+    Path:          /etc/ca-certificates
+    HostPathType:  DirectoryOrCreate
+  k8s-certs:
+    Type:          HostPath (bare host directory volume)
+    Path:          /var/lib/minikube/certs
+    HostPathType:  DirectoryOrCreate
+  usr-local-share-ca-certificates:
+    Type:          HostPath (bare host directory volume)
+    Path:          /usr/local/share/ca-certificates
+    HostPathType:  DirectoryOrCreate
+  usr-share-ca-certificates:
+    Type:          HostPath (bare host directory volume)
+    Path:          /usr/share/ca-certificates
+    HostPathType:  DirectoryOrCreate
+QoS Class:         Burstable
+Node-Selectors:    <none>
+Tolerations:       :NoExecute op=Exists
+Events:
+  Type    Reason   Age   From     Message
+  ----    ------   ----  ----     -------
+  Normal  Pulled   47m   kubelet  Container image "registry.k8s.io/kube-apiserver:v1.27.4" already present on machine
+  Normal  Created  47m   kubelet  Created container kube-apiserver
+  Normal  Started  47m   kubelet  Started container kube-apiserver
+med@med-pad-100:~/rbac$ kubectl describe pod kube-apiserver-minicluster -n kube-system | grep -i admission
+      --enable-admission-plugins=NamespaceLifecycle,LimitRanger,ServiceAccount,DefaultStorageClass,DefaultTolerationSeconds,NodeRestriction,MutatingAdmissionWebhook,ValidatingAdmissionWebhook,ResourceQuota,AlwaysPullImages
+med@med-pad-100:~/rbac$ kubectl run mutated --image=nginx --image-pull-policy=IfNotPresent
+pod/mutated created
+med@med-pad-100:~/rbac$ kubectl get pods
+NAME       READY   STATUS              RESTARTS   AGE
+admitted   1/1     Running             0          5h2m
+mutated    0/1     ContainerCreating   0          15s
+med@med-pad-100:~/rbac$ kubectl get pods
+NAME       READY   STATUS    RESTARTS   AGE
+admitted   1/1     Running   0          5h3m
+mutated    1/1     Running   0          71s
+med@med-pad-100:~/rbac$ kubectl get pod mutated -o yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  creationTimestamp: "2023-12-07T23:09:38Z"
+  labels:
+    run: mutated
+  name: mutated
+  namespace: default
+  resourceVersion: "54822"
+  uid: 58713f58-a5f5-45d8-bb71-479884ff99bc
+spec:
+  containers:
+  - image: nginx
+    imagePullPolicy: Always
+    name: mutated
+    resources: {}
+    terminationMessagePath: /dev/termination-log
+    terminationMessagePolicy: File
+    volumeMounts:
+    - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+      name: kube-api-access-2jr7m
+      readOnly: true
+  dnsPolicy: ClusterFirst
+  enableServiceLinks: true
+  nodeName: minicluster-m02
+  preemptionPolicy: PreemptLowerPriority
+  priority: 0
+  restartPolicy: Always
+  schedulerName: default-scheduler
+  securityContext: {}
+  serviceAccount: default
+  serviceAccountName: default
+  terminationGracePeriodSeconds: 30
+  tolerations:
+  - effect: NoExecute
+    key: node.kubernetes.io/not-ready
+    operator: Exists
+    tolerationSeconds: 300
+  - effect: NoExecute
+    key: node.kubernetes.io/unreachable
+    operator: Exists
+    tolerationSeconds: 300
+  volumes:
+  - name: kube-api-access-2jr7m
+    projected:
+      defaultMode: 420
+      sources:
+      - serviceAccountToken:
+          expirationSeconds: 3607
+          path: token
+      - configMap:
+          items:
+          - key: ca.crt
+            path: ca.crt
+          name: kube-root-ca.crt
+      - downwardAPI:
+          items:
+          - fieldRef:
+              apiVersion: v1
+              fieldPath: metadata.namespace
+            path: namespace
+status:
+  conditions:
+  - lastProbeTime: null
+    lastTransitionTime: "2023-12-07T23:09:42Z"
+    status: "True"
+    type: Initialized
+  - lastProbeTime: null
+    lastTransitionTime: "2023-12-07T23:09:59Z"
+    status: "True"
+    type: Ready
+  - lastProbeTime: null
+    lastTransitionTime: "2023-12-07T23:09:59Z"
+    status: "True"
+    type: ContainersReady
+  - lastProbeTime: null
+    lastTransitionTime: "2023-12-07T23:09:40Z"
+    status: "True"
+    type: PodScheduled
+  containerStatuses:
+  - containerID: docker://fb51b622e6df78e2e3accb43fc8a6cf38ae60b698188b252d092c2ea88dfe1c3
+    image: nginx:latest
+    imageID: docker-pullable://nginx@sha256:10d1f5b58f74683ad34eb29287e07dab1e90f10af243f151bb50aa5dbb4d62ee
+    lastState: {}
+    name: mutated
+    ready: true
+    restartCount: 0
+    started: true
+    state:
+      running:
+        startedAt: "2023-12-07T23:09:57Z"
+  hostIP: 192.168.49.3
+  phase: Running
+  podIP: 10.244.1.4
+  podIPs:
+  - ip: 10.244.1.4
+  qosClass: BestEffort
+  startTime: "2023-12-07T23:09:42Z"
+med@med-pad-100:~/rbac$ kubectl get pod admitted -o yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  creationTimestamp: "2023-12-07T18:07:46Z"
+  labels:
+    run: admitted
+  name: admitted
+  namespace: default
+  resourceVersion: "52119"
+  uid: e1f36ec7-d172-47cc-a540-772ab5472da4
+spec:
+  containers:
+  - image: nginx
+    imagePullPolicy: IfNotPresent
+    name: admitted
+    resources: {}
+    terminationMessagePath: /dev/termination-log
+    terminationMessagePolicy: File
+    volumeMounts:
+    - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+      name: kube-api-access-7xtsj
+      readOnly: true
+  dnsPolicy: ClusterFirst
+  enableServiceLinks: true
+  nodeName: minicluster-m02
+  preemptionPolicy: PreemptLowerPriority
+  priority: 0
+  restartPolicy: Always
+  schedulerName: default-scheduler
+  securityContext: {}
+  serviceAccount: default
+  serviceAccountName: default
+  terminationGracePeriodSeconds: 30
+  tolerations:
+  - effect: NoExecute
+    key: node.kubernetes.io/not-ready
+    operator: Exists
+    tolerationSeconds: 300
+  - effect: NoExecute
+    key: node.kubernetes.io/unreachable
+    operator: Exists
+    tolerationSeconds: 300
+  volumes:
+  - name: kube-api-access-7xtsj
+    projected:
+      defaultMode: 420
+      sources:
+      - serviceAccountToken:
+          expirationSeconds: 3607
+          path: token
+      - configMap:
+          items:
+          - key: ca.crt
+            path: ca.crt
+          name: kube-root-ca.crt
+      - downwardAPI:
+          items:
+          - fieldRef:
+              apiVersion: v1
+              fieldPath: metadata.namespace
+            path: namespace
+status:
+  conditions:
+  - lastProbeTime: null
+    lastTransitionTime: "2023-12-07T18:07:50Z"
+    status: "True"
+    type: Initialized
+  - lastProbeTime: null
+    lastTransitionTime: "2023-12-07T18:14:09Z"
+    status: "True"
+    type: Ready
+  - lastProbeTime: null
+    lastTransitionTime: "2023-12-07T18:14:09Z"
+    status: "True"
+    type: ContainersReady
+  - lastProbeTime: null
+    lastTransitionTime: "2023-12-07T18:07:48Z"
+    status: "True"
+    type: PodScheduled
+  containerStatuses:
+  - containerID: docker://6b618ff8a25ef183bf30be2a3c3b77610476b4d8de25d7e373431e6e41e8e63b
+    image: nginx:latest
+    imageID: docker-pullable://nginx@sha256:10d1f5b58f74683ad34eb29287e07dab1e90f10af243f151bb50aa5dbb4d62ee
+    lastState: {}
+    name: admitted
+    ready: true
+    restartCount: 0
+    started: true
+    state:
+      running:
+        startedAt: "2023-12-07T18:14:08Z"
+  hostIP: 192.168.49.3
+  phase: Running
+  podIP: 10.244.1.3
+  podIPs:
+  - ip: 10.244.1.3
+  qosClass: BestEffort
+  startTime: "2023-12-07T18:07:50Z"
+med@med-pad-100:~/rbac$ 
+med@med-pad-100:~/rbac$ minikube stop
+✋  Nœud d'arrêt "minicluster" ...
+❗  L'exécution de "docker container inspect minicluster --format={{.State.Status}}" a pris un temps inhabituellement long : 4.50143202s
+💡  Le redémarrage du service docker peut améliorer les performances.
+🛑  Mise hors tension du profil "minicluster" via SSH…
+✋  Nœud d'arrêt "minicluster-m02" ...
+🛑  Mise hors tension du profil "minicluster-m02" via SSH…
+🛑  2 nœuds arrêtés.
+med@med-pad-100:~/rbac$ vi
+med@med-pad-100:~/rbac$ 
+
